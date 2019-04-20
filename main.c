@@ -2,13 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "UI.h"
+#include "login.h"
 
 /* This files handles all UI functionality for the login system*/
 
 
 int main() {
     int option;
-    char *username;
+    char *username = NULL;
     option = main_menu();
     switch (option) {
         case 1:
@@ -17,7 +18,7 @@ int main() {
 
         case 2:
             registration();
-            break;
+            main();
 
         default:
             puts("Something went wrong : Debug code main_menu option");
@@ -25,6 +26,6 @@ int main() {
     if (username != NULL) {
         user_interface_main(username);
     } else {
-        puts("Invalid Username");
+        puts("Invalid Username or Password");
     }
 }

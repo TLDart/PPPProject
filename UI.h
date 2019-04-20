@@ -10,10 +10,6 @@
 
 int main_menu();
 
-int validate_login(char *username, char *password);
-
 char *login();
-
-int registration();
 
 void user_interface_main();

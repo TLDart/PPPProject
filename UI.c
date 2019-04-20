@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "UI.h"
+#include "login.h"
 
 
 int main_menu() {
@@ -35,7 +36,8 @@ char *login() {
     for (i = 0; i < max_tries; i++) {
         printf("Password: ");
         scanf("%s", password);
-        if (validate_login(username, password)) {
+        //printf("%d",validate_login(username,password));
+        if (validate_login(username, password) >= 0) {
             free(password);
             return username;
 
@@ -57,8 +59,7 @@ void user_interface_main(char *username) {
     scanf("%d", &option);
     switch (option) {
         case 1:
-            //edit_personal_info();
-            printf("1");
+            edit_personal_info(username);
             break;
 
         case 2:
@@ -79,16 +80,5 @@ void user_interface_main(char *username) {
         default:
             puts("Something went wrong : Debug code user_interface_menu option");
     }
-
-}
-
-
-// UNFISNISHED BUSINESS
-
-int validate_login(char *username, char *password) {
-    return 1;
-}
-
-int registration() {
 
 }

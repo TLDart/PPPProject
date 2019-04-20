@@ -1,0 +1,3 @@
+/home/tld/Documents/University/2 Semestre/PPP/Project work/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/tld/Documents/University/2 Semestre/PPP/Project work/cmake-build-debug/CMakeFiles/Project_work.dir
+/home/tld/Documents/University/2 Semestre/PPP/Project work/cmake-build-debug/CMakeFiles/edit_cache.dir
