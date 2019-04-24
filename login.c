@@ -99,7 +99,7 @@ int validate_login(char *username, char *password) {
         strcpy(name, token);
         token = strtok(NULL, s);
         strcpy(pass, token);
-        printf("%s || %s \n", name, pass);
+        //printf("%s || %s \n", name, pass);
         if (strcmp(name,username) == 0 && strcmp(pass,password) == 0){
             return i;
         }
