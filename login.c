@@ -1,6 +1,16 @@
 //
 // Created by tld on 20/04/19.
 //
+/*TODO: Create a find_correct_line function that finds the correct line for the output,
+ *  Correct the Duplication glitch in the change settings tabs
+ *  Find a way to output the changed settings and disregard the line overlapping
+ *  Work out a way to add location / Pdi setting to the user tab
+ *  Modifications:
+ *      -> Register: Use a buffer and malloc
+ *      -> Change struct to acommodate malloc (User)
+ *      -> Create a linked list system based on the user
+ *      -> Change legacy functions to work with the new linked list system
+ *      -> Create a write out Function to rewrite ( FULLY!) the database after changing the settings*/
 
 #include "login.h"
 #include <stdlib.h>
@@ -88,12 +98,12 @@ int validate_login(char *username, char *password) {
         strcpy(pass, token);
         //printf("%s || %s \n",name, pass);
         if (strcmp(name,username) == 0 && strcmp(pass,password) == 0){
-
             return i;
+        } else {
+            return -1;
         }
     }
     //puts("Here");
-    return -1;
 }
 
 
@@ -172,6 +182,7 @@ void edit_personal_info(char *username){
     }
 
     /*Finally it writes the content to a file in the correct line */
+
     /*fp = fopen("/home/tld/Documents/University/2 Semestre/PPP/Project work/Db/database.txt", "r");
          Insert logic to find the correct line
 

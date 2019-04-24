@@ -6,15 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/tld/Documents/University/2 Semestre/PPP/Project work/login.c
-login.h
-/home/tld/Documents/University/2 Semestre/PPP/Project work/login.h
+/home/tld/Documents/University/2 Semestre/PPP/Project work/UI.c
+string.h
+-
 stdlib.h
 -
 stdio.h
 -
-string.h
--
+UI.h
+/home/tld/Documents/University/2 Semestre/PPP/Project work/UI.h
+login.h
+/home/tld/Documents/University/2 Semestre/PPP/Project work/login.h
+
+/home/tld/Documents/University/2 Semestre/PPP/Project work/UI.h
 
 /home/tld/Documents/University/2 Semestre/PPP/Project work/login.h
 

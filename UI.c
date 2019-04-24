@@ -47,38 +47,39 @@ char *login() {
 }
 
 void user_interface_main(char *username) {
-    int option;
+    int option, running = 1;
     printf("\t\t Welcome, %s \n", username);
     puts("");
-    puts("\t\t 1) Edit Personal Info");
-    puts("\t\t 2) Change Favorite Interest Points");
-    puts("\t\t 3) Change Favorite Locations");
-    puts("\t\t 4) List the most Popular places and Interest points");
-    puts("\t\t 5) Generate a custom trip");
-    printf("\t\t");
-    scanf("%d", &option);
-    switch (option) {
-        case 1:
-            edit_personal_info(username);
-            break;
+    while (running) {
+        puts("\t\t 1) Edit Personal Info");
+        puts("\t\t 2) Change Favorite Interest Points");
+        puts("\t\t 3) Change Favorite Locations");
+        puts("\t\t 4) List the most Popular places and Interest points");
+        puts("\t\t 5) Generate a custom trip");
+        printf("\t\t");
+        scanf("%d", &option);
+        switch (option) {
+            case 1:
+                edit_personal_info(username);
+                break;
+            case 2:
+                //change_ip();
+                break;
+            case 3:
+                //change_locations();
+                break;
 
-        case 2:
-            //change_ip();
-            break;
-        case 3:
-            //change_locations();
-            break;
-
-        case 4:
-            //list_most_popular();
-            break;
-        case 5:
-            //generate_trip();
-            break;
-
-
-        default:
-            puts("Something went wrong : Debug code user_interface_menu option");
+            case 4:
+                //list_most_popular();
+                break;
+            case 5:
+                //generate_trip();
+                break;
+            case 0:
+                running = 0;
+                break;
+            default:
+                puts("Something went wrong : Debug code user_interface_menu option");
+        }
     }
-
 }
