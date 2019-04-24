@@ -92,14 +92,14 @@ int validate_login(char *username, char *password) {
        return 0;
     }
     for(i = 0; fgets(buffer, 100, fp) != NULL; i++){
-        if (buffer[0] == ' ' || strlen(buffer) < 211) {
+        if (buffer[0] == ' ' || strlen(buffer) < 2) {
             return -1;
         }
         token = strtok(buffer,s);
         strcpy(name, token);
         token = strtok(NULL, s);
         strcpy(pass, token);
-        //printf("%s || %s \n",name, pass);
+        printf("%s || %s \n", name, pass);
         if (strcmp(name,username) == 0 && strcmp(pass,password) == 0){
             return i;
         }
