@@ -92,6 +92,9 @@ int validate_login(char *username, char *password) {
        return 0;
     }
     for(i = 0; fgets(buffer, 100, fp) != NULL; i++){
+        if (buffer[0] == ' ' || strlen(buffer) < 211) {
+            return -1;
+        }
         token = strtok(buffer,s);
         strcpy(name, token);
         token = strtok(NULL, s);
@@ -99,11 +102,10 @@ int validate_login(char *username, char *password) {
         //printf("%s || %s \n",name, pass);
         if (strcmp(name,username) == 0 && strcmp(pass,password) == 0){
             return i;
-        } else {
-            return -1;
         }
     }
     //puts("Here");
+    return -1;
 }
 
 
