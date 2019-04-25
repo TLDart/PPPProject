@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/Project_work.dir/main.c.o CMakeFiles/Project_work.dir/UI.c.o CMakeFiles/Project_work.dir/login.c.o  -o Project_work 
