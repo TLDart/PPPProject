@@ -1,8 +1,3 @@
-//
-// Created by tld on 20/04/19.
-//
-/*TODO: Load the remaining data
- * */
 #include "user.h"
 #include "locals.h"
 #include "pdis.h"
@@ -10,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 #define BUFFER_SIZE 100
-#define PATH "/home/tld/Documents/New project and this time It will work :)/database2.txt"
 
 
 struct User* create_list(void){
@@ -112,16 +106,16 @@ void print_user_data(struct User* head){
     }
 }
 void print_single_user(struct User* user){
-    printf("1)Username: %s\n"
-           "2)Password: %s\n"
-           "3)Name: %s \n"
-           "4)Address: %s \n"
-           "5)Birth Date : %s \n"
-           "6)Phone Number: %s \n"
-           "7)Hot-PDI : %s\n"
-           "8)Favorite Places \n", user->username, user->password, user->name, user->address,user->birth_date,user->phone_nr, user->hot);
+    printf("1) Username: %s\n"
+           "2) Password: %s\n"
+           "3) Name: %s \n"
+           "4) Address: %s \n"
+           "5) Birth Date : %s \n"
+           "6) Phone Number: %s \n"
+           "7) Hot-PDI : %s\n"
+           "8) Favorite Places \n", user->username, user->password, user->name, user->address,user->birth_date,user->phone_nr, user->hot);
     print_local_pointers(user->locals);
-    printf("Favorite PDI's:\n");
+    printf("9) Favorite PDI's:\n");
     print_pdi_pointers(user->pdis);
     puts("");
 }
@@ -145,7 +139,7 @@ struct User* validate_login(struct User* head, char* username, char* password){
     }
     return NULL;
 }
-void edit_personal_info(struct User *head, struct User *user){
+void edit_personal_info(struct User *user_head, struct User *user, struct local* local_head, struct PDI* pdi_head){
     /*This function lets the user change the default settings */
     char option;  int valid =0;
     char buffer[BUFFER_SIZE];
@@ -153,10 +147,9 @@ void edit_personal_info(struct User *head, struct User *user){
     /* Prompts user to change his info */
     while(1){
         print_single_user(user);
-        printf("Select which one you want to change, 0 to exit \n");
+        puts("0) Exit");
         option = get_option();
         if (option == 0) {
-            write_out(PATH, head);
             break;
         }
         if (option ==1){
@@ -212,7 +205,7 @@ void edit_personal_info(struct User *head, struct User *user){
             memset(buffer,0,strlen(buffer));
 
         }
-        if (option ==6){
+        if (option == 6){
             getchar();
             printf("Phone Number: ");
             fgets(buffer,BUFFER_SIZE, stdin);
@@ -221,6 +214,21 @@ void edit_personal_info(struct User *head, struct User *user){
             user->phone_nr = malloc(strlen(buffer) * sizeof(char));
             strcpy(user->phone_nr, buffer);
             memset(buffer,0,strlen(buffer));
+        }
+        if(option == 7){
+            pdi_hot(user_head,user,pdi_head);
+        }
+
+        if(option == 8){
+            change_locals(user,local_head);
+            update_local_popularity(user_head,local_head);
+            update_pdi_popularity(user_head,pdi_head);
+        }
+
+        if(option == 9){
+            change_pdis(user, pdi_head);
+            update_local_popularity(user_head,local_head);
+            update_pdi_popularity(user_head,pdi_head);
         }
         valid = 0;
     }
@@ -618,10 +626,10 @@ void reset_popularity(struct user_pointers* head){
 
 void change_pdis(struct User *u, struct PDI* pdi_head){
     /*Main function that allows users to change preferredd pdis*/
-    int option;
+    int option, running = 1;
     int valid = 0;
     char buffer[BUFFER_SIZE];
-    while (1) {
+    while (running) {
         print_only_pdis(pdi_head);
         puts("");
         puts("Your Interest Points");
@@ -630,41 +638,40 @@ void change_pdis(struct User *u, struct PDI* pdi_head){
         puts("");
         puts("\t1) Add a PDI");
         puts("\t2) Remove a PDI");
+        puts("\t0) Exit");
 
-
-        printf("Choose an option, 0 to exit \n\t");
         option = get_option();
         if (option == 0 || option == 9) {
-            break;
+            running = 0;
         }
         if (option == 1) {
             getchar();
             while (!valid) {
-
                 printf("Choose PDI: ");
                 fgets(buffer, BUFFER_SIZE, stdin);
                 buffer[strcspn(buffer, "\n")] = 0;
-                valid = valid_pdi(pdi_head, u->pdis,buffer); /* Verifies if the password contains a whitespace */
+                valid = valid_pdi(pdi_head, u->pdis,buffer);
                 memset(buffer, 0, strlen(buffer));
                 if (valid == 0) {
                     printf("Invalid PDI\n");
                 }
             }
         }
+        valid = 0;
         if (option == 2) {
             getchar();
             while (!valid) {
                 printf("Choose PDI: ");
                 fgets(buffer, BUFFER_SIZE, stdin);
                 buffer[strcspn(buffer, "\n")] = 0;
-                valid = search_and_destroy_pdi(pdi_head, u->pdis,buffer); /* Verifies if the password contains a whitespace */
+                valid = search_and_destroy_pdi(pdi_head, u->pdis,buffer);
                 memset(buffer, 0, strlen(buffer));
                 if (valid == 0) {
                     printf("Invalid Local\n");
                 }
             }
         }
-
+        valid = 0;
     }
 }
 
@@ -720,16 +727,6 @@ void pdi_hot(struct User* user_head, struct User* user, struct PDI* pdi_head) {
     char temp[BUFFER_SIZE];
     int option;
     print_only_pdis(pdi_head);
-    while (1) {
-        printf("\tYour Favorite PDI: \n"
-               "\t1) %s \n"
-               "\t0) Exit\n",user->hot);
-        option = get_option();
-        if (option == 0 || option == 9){
-            break;
-        }
-        if (option == 1) {
-            getchar();
             do {
                 printf("Choose your PDI: ");
                 fgets(temp, BUFFER_SIZE, stdin);
@@ -739,6 +736,4 @@ void pdi_hot(struct User* user_head, struct User* user, struct PDI* pdi_head) {
                 strcpy(user->hot, temp);
             } while (!(pdi_exists(pdi_head, temp) != NULL || strcmp(temp, "None") == 0));
 
-        }
-    }
 }

@@ -43,9 +43,7 @@ int main(){
 
         if (option == 2){
             registration(user_head, local_head);
-            print_user_data(user_head);
-            write_out(PATH_USER,user_head);
-
+            //print_user_data(user_head);
         }
 
         if(option == 0)
@@ -96,40 +94,15 @@ void user_interface_main(struct User* user, struct User* user_head, struct PDI* 
     puts("");
     while (running) {
         puts("\t\t 1) Edit Personal Info");
-        puts("\t\t 2) Change Favorite Interest Points");
-        puts("\t\t 3) Change Favorite Locations");
-        puts("\t\t 4) List the most Popular places and Interest points");
-        puts("\t\t 5) Generate a custom trip");
+        puts("\t\t 2) List the most Popular places and Interest points");
+        puts("\t\t 3) Generate a custom trip");
         puts("\t\t 0) Exit");
         printf("\t\t");
         option = get_option();
         if(option == 1){
-            edit_personal_info(user_head,user);
+            edit_personal_info(user_head,user, local_head, pdi_head);
         }
         if(option == 2){
-            puts("\t\t 1) PDI Hot");
-            puts("\t\t 2) Other PDI's");
-            puts("\t\t 0) Exit");
-            option = get_option();
-            if(option == 0){
-                break;
-            }
-            if(option == 1){
-                pdi_hot(user_head,user,pdi_head);
-            }
-            if(option == 2){
-                change_pdis(user, pdi_head);
-                update_local_popularity(user_head,local_head);
-                update_pdi_popularity(user_head,pdi_head);
-            }
-        }
-        if(option == 3){
-            change_locals(user,local_head);
-            update_local_popularity(user_head,local_head);
-            update_pdi_popularity(user_head,pdi_head);
-        }
-
-        if(option == 4){
             puts("\t\t 1) List Alphabetically");
             puts("\t\t 2) List by Popularity");
             puts("\t\t 0) Exit");
@@ -145,10 +118,10 @@ void user_interface_main(struct User* user, struct User* user_head, struct PDI* 
                 puts("Not available yet");
             }
         }
-        if(option == 5){
+        if(option == 3){
             //generate_trip();
         }
-        if(option == 0){
+        if(option == 0 || option == 9){
             running = 0;
         }
     }

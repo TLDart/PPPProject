@@ -32,7 +32,7 @@ void print_user_data(struct User* head);
 void print_single_user(struct User* user);
 int get_option();
 struct User* validate_login(struct User* head, char* username, char* password);
-void edit_personal_info(struct User *head, struct User *user);
+void edit_personal_info(struct User *user_head, struct User *user, struct local* local_head, struct PDI* pdi_head);
 int check_if_valid(char *string);
 
 char *generate_locals(struct local_pointers* locals);
