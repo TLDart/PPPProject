@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(Project_Test C)
+project(Project work C)
 
 set(CMAKE_C_STANDARD 90)
 

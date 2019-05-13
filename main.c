@@ -1,37 +1,57 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "locals.h"
+#include "pdis.h"
 #include "user.h"
 #define MAX_TRIES 3 /* Max number of tries for login*/
 #define MAX_SIZE 50 /*max size for username and password */
-#define PATH "/home/tld/Documents/University/2 Semestre/PPP/Exercise Files/Project Test/Db/database2.txt"
+#define PATH_USER "/home/tld/Documents/New project and this time It will work :)/database2.txt"
+#define PATH_LOCALS "/home/tld/Documents/University/2 Semestre/PPP/Exercise Files/Project Test/Db/US.txt"
 
-/* This files handles all UI functionality for the login system*/
-void user_interface_main(char *username, struct User* head);
+void user_interface_main(struct User* user, struct User* head, struct PDI* pdi_head, struct local* local_head);
 int show_main_menu();
-char login(int max_tries , struct User* head);
+char login(int max_tries , struct User* head, struct PDI* pdi_head, struct local* local_head);
 
-int main() {
+int main(){
     int option, running = 1;
-    struct User* head;
-    head = load_user_data(PATH); /*Preload data */
-    //print_user_data(head);
+    struct User* user_head; /*Preload data */
+    struct PDI* pdi_head;
+    struct local* local_head;
+    pdi_head = create_list_pdi();
+    local_head = create_list_local();
+    user_head = create_list();
+    load_pdi_data(pdi_head,PATH_LOCALS);
+    load_local(pdi_head,local_head);
+    load_user_data(user_head,PATH_USER,local_head, pdi_head);
+    update_local_popularity(user_head,local_head);
+    update_pdi_popularity(user_head,pdi_head);
+    //print_popularity_pdi(pdi_head);
+    //print_popularity_local(local_head);
+    //print_user_data(user_head);
+   //print_local_list(local_head);
+   //puts(local_exists(local_head,"Arizona")->name);
+    /* Debug
+    print_pdi_data(pdi_head);
+    print_local_list(local_head);
+    print_user_data(user_head);
+     */
     while(running) {
         show_main_menu();
         option = get_option();
         if (option == 1){
-            login(MAX_TRIES, head);
+            login(MAX_TRIES, user_head,pdi_head,local_head);
             break;}
 
         if (option == 2){
-            registration(head);
-            write_out(PATH,head);
-            print_user_data(head);}
+            registration(user_head, local_head);
+            print_user_data(user_head);
+            write_out(PATH_USER,user_head);
+
+        }
 
         if(option == 0)
             running = 0;
     }
-
+    write_out(PATH_USER, user_head);
 
 }
 
@@ -41,20 +61,23 @@ int show_main_menu() {
     puts("\t\t Please select an option");
     puts("\t\t 1) Login");
     puts("\t\t 2) Register");
+    puts("\t\t 0) Exit");
 
 }
 
-char login(int max_tries, struct User* head) {
+char login(int max_tries, struct User* user_head, struct PDI* pdi_head, struct local* local_head) {
     /*Login system */
     char username[MAX_SIZE], password[MAX_SIZE];int i;
+    struct User* user;
     printf("Username: ");
     scanf("%s", username);
 
     for (i = 0; i < max_tries; i++) {
         printf("Password: ");
         scanf("%s", password);
-        if (validate_login(head,username, password) >= 0) {
-            user_interface_main(username, head);
+        user = validate_login(user_head,username, password);
+        if (user) {
+            user_interface_main(user, user_head,pdi_head, local_head);
             break;
         }
         else{
@@ -66,10 +89,10 @@ char login(int max_tries, struct User* head) {
 
 }
 
-void user_interface_main(char *username, struct User* head) {
+void user_interface_main(struct User* user, struct User* user_head, struct PDI* pdi_head, struct local* local_head) {
     /*User interface Post-login */
     int option, running = 1;
-    printf("\t\t Welcome, %s \n", username);
+    printf("\t\t Welcome, %s \n", user->username);
     puts("");
     while (running) {
         puts("\t\t 1) Edit Personal Info");
@@ -81,21 +104,50 @@ void user_interface_main(char *username, struct User* head) {
         printf("\t\t");
         option = get_option();
         if(option == 1){
-            edit_personal_info(head,username);
-            }
+            edit_personal_info(user_head,user);
+        }
         if(option == 2){
-            //change_ip();
+            puts("\t\t 1) PDI Hot");
+            puts("\t\t 2) Other PDI's");
+            puts("\t\t 0) Exit");
+            option = get_option();
+            if(option == 0){
+                break;
             }
+            if(option == 1){
+                pdi_hot(user_head,user,pdi_head);
+            }
+            if(option == 2){
+                change_pdis(user, pdi_head);
+                update_local_popularity(user_head,local_head);
+                update_pdi_popularity(user_head,pdi_head);
+            }
+        }
         if(option == 3){
-            //change_locations();
-            }
+            change_locals(user,local_head);
+            update_local_popularity(user_head,local_head);
+            update_pdi_popularity(user_head,pdi_head);
+        }
 
         if(option == 4){
-            //list_most_popular();
+            puts("\t\t 1) List Alphabetically");
+            puts("\t\t 2) List by Popularity");
+            puts("\t\t 0) Exit");
+            option = get_option();
+            if(option == 0){
+                break;
             }
+            if(option == 1){
+                print_local_list(local_head);
+            }
+            if(option == 2){
+                //List_by_popularity
+                puts("Not available yet");
+            }
+        }
         if(option == 5){
             //generate_trip();
-            }
+        }
         if(option == 0){
             running = 0;
         }
