@@ -4,11 +4,13 @@
 
 #ifndef NEW_PROJECT_AND_THIS_TIME_IT_WILL_WORK____PDIS_H
 #define NEW_PROJECT_AND_THIS_TIME_IT_WILL_WORK____PDIS_H
+
 struct PDI{
     char *name;
     char *local;
     char *description;
     char *schedule;
+    int popularity;
     struct user_pointers *users_info;
     struct PDI *next;
 };
@@ -30,5 +32,12 @@ struct pdi_pointers* create_pdi_pointers(void);
 void parse_pdi(struct PDI* pdi_head, struct pdi_pointers* insert, char *name);
 void tail_insert_pdi_pointers(struct pdi_pointers* head, struct PDI* pdi);
 void print_pdi_pointers(struct pdi_pointers*);
+
+struct PDI** add_pointers_pdi(struct PDI *pdi_head, int size);
+void insert_popularity_pdi(struct PDI* head);
+int count_pdi_number(struct PDI *head);
+struct PDI** create_popularity_order_pdi(struct PDI* pdi_head, int size);
+void print_popularity_order_pdi(struct PDI** popularity_array,int size);
+void bubble_sort_popularity_pdi(struct PDI** array,int n, int ascending);
 
 #endif //NEW_PROJECT_AND_THIS_TIME_IT_WILL_WORK____PDIS_H

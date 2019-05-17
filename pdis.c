@@ -94,7 +94,8 @@ void print_pdi_data(struct PDI* head){
         printf("Name: %s\n"
                "Local: %s\n"
                "Description: %s \n"
-               "Schedule: %s \n", u->name, u->local, u->description, u->schedule);
+               "Schedule: %s \n"
+               "Popularity: %d", u->name, u->local, u->description, u->schedule, u->popularity);
         puts("");
 
         u=u->next;
@@ -192,5 +193,81 @@ void print_pdi_pointers(struct pdi_pointers* pdis){
             printf("\t-> None \n");
         }
         pdis = pdis->next;
+    }
+}
+/*------------------------------------------------------------------------------------------------------------*/
+void insert_popularity_pdi(struct PDI* head){
+    head = head->next;
+    while(head){
+        head->popularity = count_popularity(head->users_info);
+        head = head->next;
+    }
+}
+
+int count_pdi_number(struct PDI *head){
+    /*Count the number of locals on a local list*/
+    int count=0;
+    struct PDI *current = head->next;
+    while(current){
+        count++;
+        current=current->next;
+    }
+    return count;
+}
+
+struct PDI** create_popularity_order_pdi(struct PDI* pdi_head, int size){
+    struct PDI** pdi_head_popularity = add_pointers_pdi(pdi_head, size);
+    bubble_sort_popularity_pdi(pdi_head_popularity,size, 0);
+    //print_popularity_order_pdi(pdi_head_popularity,n);
+    //printf("%d", n);
+    return pdi_head_popularity;
+}
+
+struct PDI** add_pointers_pdi(struct PDI *pdi_head, int size){
+    int i;
+    pdi_head = pdi_head->next;
+    struct PDI** pdi_head_popularity = (struct PDI**)malloc(size*sizeof(struct PDI*));;
+    for (i=0;pdi_head;i++){
+        pdi_head_popularity[i]=pdi_head;
+        pdi_head=pdi_head->next;
+    }
+    return pdi_head_popularity;
+}
+
+void print_popularity_order_pdi(struct PDI** popularity_array,int size){
+    int i = 0;
+    for(i = 0; i < size ; i++){
+        printf("%s ->%d \n",popularity_array[i]->name,popularity_array[i]->popularity);
+    }
+}
+
+void bubble_sort_popularity_pdi(struct PDI** array,int n, int ascending){
+    /*Bubble sorts the array of locals by popularity*/
+    struct PDI * temp;
+    int i, j;
+    if (ascending == 0) {
+
+        for (i = 0; i < n - 1; i++) {
+            // Last i elements are already in place
+            for (j = 0; j < n - i - 1; j++) {
+                if (array[j]->popularity < array[j + 1]->popularity) {
+                    temp = array[j + 1];
+                    array[j + 1] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+    }
+    else{
+        for (i = 0; i < n - 1; i++) {
+            // Last i elements are already in place
+            for (j = 0; j < n - i - 1; j++) {
+                if (array[j]->popularity > array[j + 1]->popularity) {
+                    temp = array[j + 1];
+                    array[j + 1] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
     }
 }

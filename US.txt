@@ -1,0 +1,21 @@
+Grand Canyon National Park,Arizona,Do not know to not care,12:00-16:00
+Statue of Liberty National Monument,New York,Do not know to not care,08:00-19:0
+Yosemite National Park,California,Do not know to not care,12:00-19:00
+Yellowstone National Park,Wyoming,Do not know to not care,06:00-16:00
+Disneyland Park,California,Do not know to not care,08:00-20:00
+Central Park,New York,Do not know to not care,10:00-20:00
+Golden Gate Bridge,California,Do not know to not care,07:00-17:00
+Empire State Building,New York,Do not know to not care,09:00-19:00
+Zion National Park,Utah,Do not know to not care,10:00-20:00
+Bryce Canyon National Park,Utah,Do not know to not care,06:00-18:00
+Walt Disney World Resort,Florida,Do not know to not care,07:30-18:00
+Hoover Dam,Arizona,Do not know do ont care, 06:00-17:30
+Arches National Park,Utah,Do not know do Not care,08:00-16:40
+Florida Keys,Florida,Florida,Do not know do Not care,08:00-16:40
+Everglades National Park,Florida,Do not know do Not care,08:00-16:40
+Universal Studios Florida,Florida,Do not know do Not care,12:00-18:00
+Antelope Canyon,Arizona,Do not know do Not care,09:00-15:00
+Monument Valley,Arizona,Do not know do Not care,12:00-17:00
+Grand Canyon Village,Arizona,Do not know do Not care,06:00-18:00
+Grand Teton National Park,Wyoming,Do not know do Not care,09:00-17:00
+Devils Tower National Monument,Wyoming,Geologic landmark with a storied past, 00:00-00:00
