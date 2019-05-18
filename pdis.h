@@ -23,7 +23,6 @@ struct pdi_pointers{
 struct PDI* create_list_pdi(void);
 void load_pdi_data(struct PDI* head,char *path);
 void searching_pdi(struct PDI* list, char* key, struct PDI** ant, struct PDI** actual);
-int count_pdis(struct PDI *head,char *local);
 void print_pdi_data(struct PDI* head);
 void print_single_pdi(struct PDI* u);
 struct PDI* pdi_exists(struct PDI* head, char* name);

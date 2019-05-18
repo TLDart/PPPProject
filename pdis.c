@@ -73,19 +73,6 @@ void searching_pdi(struct PDI* list, char* key, struct PDI** ant, struct PDI** a
         *actual = NULL; /* If the element was not found*/
 }
 
-int count_pdis(struct PDI *head,char *local){
-    /*Runs through a PDI list and counts the number of PDI's from a certain local*/
-    int count=0;
-    head = head->next;
-    while(head != NULL){
-        if(strcmp(head->local,local) == 0){
-            count++;
-        }
-        head = head->next;
-    }
-    return count;
-}
-
 void print_pdi_data(struct PDI* head){
     /*Prints PDi data*/
     struct PDI*u = head->next; /* Skips the header*/
@@ -114,7 +101,7 @@ void print_single_pdi(struct PDI* u){
 }
 
 struct PDI* pdi_exists(struct PDI* head, char* name){
-    /* Check if there is a PDI {NAME}*/
+    /* s if there is a PDI {NAME}*/
     head = head->next; /* Ignore header*/
     if(head != NULL) {
         while (head != NULL) {
@@ -147,7 +134,8 @@ struct pdi_pointers* create_pdi_pointers(void){
     return aux;
 }
 void parse_pdi(struct PDI* pdi_head, struct pdi_pointers* insert, char *name){
-    pdi_head = pdi_head->next; /*Skips header*/
+    /*parses a given {PDIName} into a pdi_pointers linked lists and inserts in the end*/
+    //pdi_head = pdi_head->next; /*Skips header*/
     while(insert->next != NULL){
         insert = insert->next;
     }
@@ -160,14 +148,14 @@ void parse_pdi(struct PDI* pdi_head, struct pdi_pointers* insert, char *name){
 
     }
     else{
-        temp->info = NULL;
-        temp->next = NULL;
-        insert->next = temp;
+        //print_only_pdis(pdi_head);
+        //puts(name);
     }
 
 }
 
 void tail_insert_pdi_pointers(struct pdi_pointers* head, struct PDI* pdi){
+    /*Inserts pdi to the end of PDI pointers*/
     struct pdi_pointers* new;
     if(head->next != NULL){
         head = head->next;
@@ -184,6 +172,7 @@ void tail_insert_pdi_pointers(struct pdi_pointers* head, struct PDI* pdi){
 }
 
 void print_pdi_pointers(struct pdi_pointers* pdis){
+    /*Prints a list of pdi pointers, or None if NULL*/
     pdis = pdis->next;
     while(pdis != NULL){
         if(pdis->info != NULL){
@@ -197,6 +186,7 @@ void print_pdi_pointers(struct pdi_pointers* pdis){
 }
 /*------------------------------------------------------------------------------------------------------------*/
 void insert_popularity_pdi(struct PDI* head){
+    /*Changes the popularity parameter for all  PDI's*/
     head = head->next;
     while(head){
         head->popularity = count_popularity(head->users_info);
@@ -205,7 +195,7 @@ void insert_popularity_pdi(struct PDI* head){
 }
 
 int count_pdi_number(struct PDI *head){
-    /*Count the number of locals on a local list*/
+    /*Counts the number of locals on a local list*/
     int count=0;
     struct PDI *current = head->next;
     while(current){
@@ -216,6 +206,7 @@ int count_pdi_number(struct PDI *head){
 }
 
 struct PDI** create_popularity_order_pdi(struct PDI* pdi_head, int size){
+    /*Function that generates a sorted-by-popularity PDI array*/
     struct PDI** pdi_head_popularity = add_pointers_pdi(pdi_head, size);
     bubble_sort_popularity_pdi(pdi_head_popularity,size, 0);
     //print_popularity_order_pdi(pdi_head_popularity,n);
@@ -224,6 +215,7 @@ struct PDI** create_popularity_order_pdi(struct PDI* pdi_head, int size){
 }
 
 struct PDI** add_pointers_pdi(struct PDI *pdi_head, int size){
+    /* Returns an array with the PDI organized by popularity*/
     int i;
     pdi_head = pdi_head->next;
     struct PDI** pdi_head_popularity = (struct PDI**)malloc(size*sizeof(struct PDI*));;
@@ -235,6 +227,7 @@ struct PDI** add_pointers_pdi(struct PDI *pdi_head, int size){
 }
 
 void print_popularity_order_pdi(struct PDI** popularity_array,int size){
+    /*Prints the PDI name alongside is popularity*/
     int i = 0;
     for(i = 0; i < size ; i++){
         printf("%s ->%d \n",popularity_array[i]->name,popularity_array[i]->popularity);

@@ -121,6 +121,7 @@ int print_local_list(struct local *head){
 }
 
 void print_only_locals(struct local *head){
+    /*Function that prints only names of locals*/
     head = head->next;
     printf("Locations in the Database \n");
     while (head){
@@ -131,6 +132,7 @@ void print_only_locals(struct local *head){
 }
 
 void parse_local(struct local* local_head, struct local_pointers* insert, char *name){
+    /*Function that transform a char {LOCAL} into either a pointer to the corresponding local or NULL if None */
     while(insert->next != NULL){
         insert = insert->next;
     }
@@ -162,6 +164,7 @@ struct local_pointers* create_locals_pointers(void){
 }
 
 void print_local_pointers(struct local_pointers * locals){
+    /*Runs though a local pointers and prints its content*/
     locals = locals->next;
     while(locals != NULL){
 
@@ -177,6 +180,7 @@ void print_local_pointers(struct local_pointers * locals){
 
 /*-----------------------------------------------------------------------------------------*/
 void insert_popularity_local(struct local* head){
+    /*Runs through all locals and insert their popularity parameter*/
     head = head->next;
     while(head){
         head->popularity = count_popularity(head->users_info);
@@ -197,6 +201,7 @@ int count_local(struct local *head){
 }
 
 struct local** create_popularity_order(struct local* local_head, int size){
+    /*Main function that both creates and sorts local popularity array*/
     struct local** local_head_popularity = add_pointers_locals(local_head, size);
     bubble_sort_popularity_local(local_head_popularity,size, 0);
     //print_popularity_order(local_head_popularity, n);
@@ -204,6 +209,7 @@ struct local** create_popularity_order(struct local* local_head, int size){
     }
 
 struct local** add_pointers_locals(struct local *local_head, int size){
+    /*Add pointer to local to local array*/
     int i;
     local_head = local_head->next;
     struct local** local_head_popularity = (struct local**)malloc(size*sizeof(struct local*));;
@@ -215,6 +221,7 @@ struct local** add_pointers_locals(struct local *local_head, int size){
 }
 
 void print_popularity_order(struct local** popularity_array,int size){
+    /*Print locals array*/
     int i = 0;
     for(i = 0; i < size ; i++){
         printf("%s ->%d \n",popularity_array[i]->name,popularity_array[i]->popularity);
@@ -253,6 +260,7 @@ void bubble_sort_popularity_local(struct local** array,int n, int ascending){
 }
 
 void print_local_and_pdi_pop(struct local** local_array_popularity, struct PDI** local_pdi_popularity, int local_size, int size_pdi){
+    /*Prints a list with both locals PDI's organized by popularity*/
     int i = 0, j = 0;
     for(i = 0; i < local_size; i++){
         printf("-> %s: %d \n",local_array_popularity[i]->name,local_array_popularity[i]->popularity);

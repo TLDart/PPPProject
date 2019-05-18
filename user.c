@@ -32,7 +32,7 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
         puts("Invalid File");
 
 
-    while(fgets(buffer, 250, fp) != NULL){
+    while(fgets(buffer, 350, fp) != NULL){
         node = (struct User*) malloc (sizeof (struct User));
         if (node != NULL) {
             token = strtok(buffer, s);
@@ -90,7 +90,6 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
         }
     }
 }
-
 void print_user_data(struct User* head){
     /*Prints user data for all users*/
     struct User* u = head->next; /* Salta o header */
@@ -513,7 +512,7 @@ void registration(struct User* head, struct local* local_head) {
 }
 
 struct user_pointers* create_user_pointers(void){
-    /* Creates a linked list for locals*/
+    /* Creates a linked list for user_pointers*/
     struct user_pointers* aux;
     aux = (struct user_pointers*) malloc(sizeof(struct user_pointers));
     if(aux != NULL){
@@ -550,7 +549,7 @@ void tail_insert_user_pointer(struct user_pointers* u, struct User* user){
 }
 
 void print_popularity_local(struct local* head){
-    /*Prints which users have said preference by a locol*/
+    /*Prints the a given local name and its popularity*/
     head = head->next;
     while(head){
         head->users_info = head->users_info->next;
@@ -576,7 +575,7 @@ void update_locals_users_pointers(struct local_pointers* u, struct User* user){
 }
 /*-------------------------------------------------------------------------*/
 void update_pdi_popularity(struct User* u, struct PDI* pdi_head){
-    /*Generates a linked list with all the users corresponding to locals*/
+    /*Generates a linked list with all the users corresponding to pdis*/
     pdi_head = pdi_head->next;
     while(pdi_head){
         reset_popularity(pdi_head->users_info);
@@ -591,7 +590,7 @@ void update_pdi_popularity(struct User* u, struct PDI* pdi_head){
 }
 
 void update_pdi_users_pointers(struct pdi_pointers* u, struct User* user) {
-    /*Have to use this in order not to modify inside content*/
+    /*Helps update pdi popularity (similar to lacal fucntions)*/
     int i = 0;
     if (u->next != NULL) {
         u = u->next;
@@ -679,6 +678,7 @@ void change_locals(struct User *u, struct local* local_head) {
 }
 
 void print_user_locals(struct local_pointers* u){
+    /*Prints Menu with user locals , either  {NAME} OR {NONE}*/
     int i = 0;
     u = u->next;
     for(i = 0; i < 3 ; i++){
@@ -710,6 +710,7 @@ int valid_local(struct local* local_head,struct local_pointers * current, char *
 }
 
 void reset_popularity(struct user_pointers* head){
+    /*Goes through a linked list of popularity and frees it*/
     struct user_pointers* temp;
     while(head != NULL){
         temp = head;
@@ -721,7 +722,7 @@ void reset_popularity(struct user_pointers* head){
 /*--------------------------------------------------------------------------------------------*/
 
 void change_pdis(struct User *u, struct PDI* pdi_head){
-    /*Main function that allows users to change preferredd pdis*/
+    /*Main function that allows users to change preferred pdis*/
     int option, running = 1;
     int valid = 0;
     char buffer[BUFFER_SIZE];
@@ -797,6 +798,7 @@ int search_and_destroy_pdi(struct PDI* pdi_head,struct pdi_pointers *insert_head
 }
 
 void remove_pdi(struct pdi_pointers* head, struct PDI* pdi){
+    /*Searches for a specific PDI and removes it*/
     struct pdi_pointers *aux = head;
     int valid = 0;
     head = head->next;
@@ -819,7 +821,7 @@ void remove_pdi(struct pdi_pointers* head, struct PDI* pdi){
 /*-------------------------------------------------------------------------------------------------*/
 
 void pdi_hot(struct User* user_head, struct User* user, struct PDI* pdi_head) {
-    /*Changes Location Preferences*/
+    /*Main menu to change Hot PDI*/
     char temp[BUFFER_SIZE];
     int option;
     print_only_pdis(pdi_head);
@@ -835,6 +837,7 @@ void pdi_hot(struct User* user_head, struct User* user, struct PDI* pdi_head) {
 }
 /*-------------------------------------------------------------------------------*/
 int count_popularity(struct user_pointers* head){
+    /*Counts the popularity of a given PDI / local, returns the popularity number*/
     int counter = 0;
     while(head){
         counter++;
@@ -866,18 +869,18 @@ struct PDI ** generate_per_local(struct PDI* pdi_head,struct User *u,struct loca
     int counter = 0, i = 0;
     if(check_pdi_in_local(u->hot, local)){
         temp = pdi_exists(pdi_head,u->hot);
-        printf("\t-->%s\n", u->hot);
+        printf("\t-->%s \n", u->hot);
         array[counter++] = temp;
     }
         //print_popularity_order_pdi(pdi_pop_array,pdi_pop_array_size);
-            for (i = 0; counter < 3 && i < (pdi_pop_array_size - 1); i++) {
+            for (i = 0; counter < 3 && i < (pdi_pop_array_size); i++) {
                 if(strcmp(pdi_pop_array[i]->local, local->name) == 0 && pdi_in_user(u->pdis, pdi_pop_array[i]) && !check_array(array,counter,pdi_pop_array[i])){
                         printf("\t-->%s \n", pdi_pop_array[i]->name);
                         array[counter++] = pdi_pop_array[i];
 
                 }
             }
-        for (i = 0; counter < 3 && i < (pdi_pop_array_size - 1); i++) {
+        for (i = 0; counter < 3 && i < (pdi_pop_array_size ); i++) {
             if(strcmp(pdi_pop_array[i]->local, local->name) == 0 && !check_array(array,counter,pdi_pop_array[i])){
                 printf("\t-->%s \n", pdi_pop_array[i]->name);
                 array[counter++] = pdi_pop_array[i];
@@ -886,7 +889,7 @@ struct PDI ** generate_per_local(struct PDI* pdi_head,struct User *u,struct loca
         return array;
 }
 int check_pdi_in_local(char *hot, struct local *local){
-    /*Check if hot pdi belongs to a local*/
+    /*Checks if hot pdi belongs to a local*/
     struct pdi_pointers* temp = local->info->next;
     while(temp){
         if(strcmp(hot,temp->info->name) == 0){
@@ -912,6 +915,7 @@ int pdi_in_user(struct pdi_pointers* user_pdis, struct PDI *pdi){
 }
 
 double popularity_tax_calculator(struct PDI** blockA, struct PDI** blockB,struct PDI** blockC,struct User* user_head,struct User* user, struct PDI* pdi_head){
+    /*Calculates the popularity of a trip*/
     double result = 0, valueA = 0, valueB = 0, valueC = 0, totalA = 0, totalB = 0, totalC = 0;
     int i = 0;
     totalA = count_users(user_head);
@@ -932,7 +936,7 @@ double popularity_tax_calculator(struct PDI** blockA, struct PDI** blockB,struct
     return result * 100;
 }
 int check_hot(struct User* user_head, struct PDI* pdi){
-    /*Checks if a PDI is a user*/
+    /*Checks if a PDI is a user's hot for every user, returns the number of times that happens*/
     int value = 0;
     user_head = user_head->next;
     while(user_head){
@@ -967,7 +971,7 @@ int check_array(struct PDI** pdi_array, int size, struct PDI* pdi){
 }
 
 int user_local_selected(struct User* user_head, struct local* localA, struct local* localB, struct local* localC){
-    /*Checks if the user has any of the locals selected*/
+    /*Checks every user if there is atleast one of LOCALA, LOCALB or LOCALC selected, returns teh number of times that happens*/
     user_head = user_head->next;
     int counter = 0, temp = 0;
     while(user_head){
@@ -993,7 +997,7 @@ int add_popularity(struct PDI* pdi){
     return pdi->popularity;
 }
 int total_popularity(struct PDI* pdi_head){
-    /*Returs de popularity of all PDI´s*/
+    /*Returns de popularity of all PDI´s*/
     int count = 0;
     pdi_head = pdi_head->next;
     while(pdi_head){

@@ -23,12 +23,13 @@ int main(){
     load_pdi_data(pdi_head,PATH_LOCALS);
     load_local(pdi_head,local_head);
     load_user_data(user_head,PATH_USER,local_head, pdi_head);
+    //print_local_list(local_head);
+    //print_user_data(user_head);
     update_local_popularity(user_head,local_head);
     update_pdi_popularity(user_head,pdi_head);
     //print_popularity_pdi(pdi_head);
     insert_popularity_pdi(pdi_head);
     insert_popularity_local(local_head);
-
     //print_local_list(local_head);
         //print_only_locals(local_head);
     //print_popularity_local(local_head);
