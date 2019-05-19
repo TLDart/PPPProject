@@ -1,8 +1,9 @@
-Dart,test,Duarte,Rua Antonio Vaz,24-03-2000,917106859,Wyoming,New York,California,Statue of Liberty National Monument,Disneyland Park
-GODMarega,maregod,Marega Jesus,Casal Ventoso,12-31-41231,9129313219,None,None,None,None
-Peseiro,grandekeiser,Ze,Desapareceu de alvalade,1910,12371238,None,None,None,Central Park
-lulz,luladasilva,lulex,asdasd,dadsafasf,123454124,None,None,None,None,Statue of Liberty National Monument,Yellowstone National Park,Empire State Building
-zedascoubes,questamerda,ZE,Velharias,12-5-1987,12345123231,None,None,None,None
-dresilva,test2,Dre,COimbra,2000,891713232,None,None,None,Golden Gate Bridge
-GabrielFernandes,oladuarte,Gabriel Fernandes,This is test,2000/09/07,913351358,None,None,California,None
-Test,test,test,test,test,tetsta,None,None,None,Disneyland Park
+Dart,test,Duarte,Rua Qualquer,12,4,2019,917178121,New York,Arizona,California,Zion National Park,Disneyland Park,Empire State Building,Zion National Park,Golden Gate Bridge
+GODMarega,maregod,Marega Jesus,Casal Ventoso,12,31,1234,9129313219,California,Utah,None,None
+Peseiro,grandekeiser,Ze,Desapareceu de alvalade,12,3,1910,12371238,Utah,None,None,Central Park
+lulz,luladasilva,lulex,asdasd,3,13,1970,123454124,Florida,Utah,None,None,Statue of Liberty National Monument,Yellowstone National Park,Empire State Building
+zedascoubes,questamerda,ZE,Velharias,12,5,1987,12345123231,Utah,None,None,None
+dresilva,test2,Dre,COimbra,22,2,2000,891713232,Utah,None,None,Golden Gate Bridge
+GabrielFernandes,oladuarte,Gabriel Fernandes,This is test,2000,9,7,913351358,Utah,None,California,None
+Test,test,SupBitch,test,4,4,1988,tetsta,Utah,None,None,Bryce Canyon National Park,Disneyland Park
+ze,hallo,Zezoca,qualquer,5,11,2017,91919912,Utah,None,None,None,Disneyland Park

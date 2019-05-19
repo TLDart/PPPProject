@@ -1,8 +1,0 @@
-Dart,test,Duarte,Rua Antonio Vaz,24-03-2000,917106859
-GODMarega,maregod,Marega Jesus,Casal Ventoso,12-31-41231,9129313219
-Peseiro,grandekeiser,Ze,Desapareceu de alvalade,1910,12371238
-ad,asda,as,da,sd,1212
-lulz,luladasilva,lulex,asdasd,dadsafasf,123454124
-zedascoubes,questamerda,ZE,Velharias,12-5-1987,12345123231
-dresilva,test2,Dre,COimbra,2000,891713232
-GabrielFernandes,oladuarte,Gabriel Fernandes,This is test,2000/09/07,912352358
