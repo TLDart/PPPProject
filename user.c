@@ -6,7 +6,6 @@
 #include <string.h>
 #define BUFFER_SIZE 100
 
-
 struct User* create_list(void){
     /* Creates a linked list for users*/
     struct User* aux;
@@ -26,11 +25,9 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
     struct User* node;
     tail = head;
     fp = fopen(path, "r");
-
     /*Check if fp exists*/
     if (fp == NULL)
         puts("Invalid File");
-
 
     while(fgets(buffer, 350, fp) != NULL){
         node = (struct User*) malloc (sizeof (struct User));
@@ -90,27 +87,7 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
         }
     }
 }
-void print_user_data(struct User* head){
-    /*Prints user data for all users*/
-    struct User* u = head->next; /* Salta o header */
 
-    while (u)
-    {
-        printf("Username: %s\n"
-               "Password: %s\n"
-               "Name: %s \n"
-               "Address: %s \n"
-               "Birth Date : %d-%d-%d \n"
-               "Phone Number: %s \n"
-               "Hot-PDI : %s\n"
-               "Favorite Places\n", u->username, u->password, u->name, u->address,u->bdate->day,u->bdate->month, u->bdate->year,u->phone_nr, u->hot);
-        print_local_pointers(u->locals);
-        printf("Favorite PDI's:\n");
-        print_pdi_pointers(u->pdis);
-        puts("");
-        u=u->next;
-    }
-}
 void print_single_user(struct User* user){
     printf("1) Username: %s\n"
            "2) Password: %s\n"
@@ -126,13 +103,13 @@ void print_single_user(struct User* user){
     puts("");
 }
 
-
 int get_option(){
     /*Gets an option*/
-    int option, result;
+    int option, result, counter = 0;
     do{
         result = scanf("%d", &option);
-        if(result != 1){ getchar(); puts("Invalid Option");}
+        counter++;
+        if(result != 1){ getchar(); if (counter < 2)puts("Invalid Option");}
     }
     while(result == 0);
     return option;
@@ -153,7 +130,6 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
     /*This function lets the user change the default settings */
     char option;  int valid = 0,valid_ph = 0, number;
     char buffer[BUFFER_SIZE];
-
     /* Prompts user to change his info */
     while(1){
         print_single_user(user);
@@ -181,8 +157,6 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                     free(user->password);
                     user->password = malloc(strlen(buffer) * sizeof(char));
                     strcpy(user->password, buffer);
-
-
                 }
                 memset(buffer,0,strlen(buffer));
             }
@@ -206,7 +180,6 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
             user->address = malloc(strlen(buffer)* sizeof(char));
             strcpy(user->address, buffer);
             memset(buffer,0,strlen(buffer));
-
         }
 
         if (option ==5) {
@@ -227,16 +200,15 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                 user->bdate->month = number;
                 do {
                     number = get_option();
-                    if (number < 1900 || number > 2019)
+                    if (number < 1900 || number > 2010)
                         puts("Invalid Number");
-                } while (number < 1900 || number > 2019);
+                } while (number < 1900 || number > 2010);
                 user->bdate->year = number;
                 if (valid_date(user->bdate))
                     break;
                 puts("There is no such day as that");
             }
         }
-
         if (option == 6){
             getchar();
             while(!valid_ph){
@@ -261,18 +233,16 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
 
         if(option == 8){
             change_locals(user,local_head);
-            update_local_popularity(user_head,local_head);
-            update_pdi_popularity(user_head,pdi_head);
         }
 
         if(option == 9){
             change_pdis(user, pdi_head);
-            update_local_popularity(user_head,local_head);
-            update_pdi_popularity(user_head,pdi_head);
         }
         valid = 0;
         valid_ph = 0;
     }
+    update_local_popularity(user_head,local_head);
+    update_pdi_popularity(user_head,pdi_head);
 }
 
 int check_if_valid(char *string) {
@@ -283,7 +253,6 @@ int check_if_valid(char *string) {
             return 0;
         }
     }
-
     return 1;
 }
 
@@ -292,9 +261,7 @@ int valid_number(char *ph_nr){
     if(atoi(ph_nr) > 100000000  && atoi(ph_nr) < 1000000000){
         return 1;
     }
-    else{
         return 0;
-    }
 }
 int valid_date(struct date* d){
     /*Verifies if there is actually a day corresponding the date the user has just input*/
@@ -304,7 +271,6 @@ int valid_date(struct date* d){
     while(year > d->year){
         year -= 4;
     }
-    printf("%d", year);
     if(year != d->year){
         if(d->month == 2 && d->day > 28)
             return 0;
@@ -314,90 +280,38 @@ int valid_date(struct date* d){
             return 0;
     }
     return 1;
-
 }
 
 void write_out(char* path, struct User* head){
+    int i = 0;
     FILE *fp;
+    struct local_pointers* temp;
+    struct pdi_pointers* pdis;
     fp = fopen(path, "w+");
-    char * locals, *pdis;
     head = head->next; /* Jumps header */
     while (head != NULL){
-        locals = generate_locals(head->locals);
-        pdis = generate_pdis(head->pdis);
-        fprintf(fp,"%s,%s,%s,%s,%d,%d,%d,%s,%s,%s%s\n", head->username,head->password,head->name, head->address, head->bdate->day,head->bdate->month,head->bdate->year, head->phone_nr, locals,head->hot, pdis);
-        //printf("%s,%s,%s,%s,%s,%s,%s,%s%s\n", head->username,head->password,head->name, head->address, head->birth_date, head->phone_nr, locals,head->hot, pdis);
+        temp = head->locals->next;
+        pdis = head->pdis->next;
+        fprintf(fp,"%s,%s,%s,%s,%d,%d,%d,%s", head->username,head->password,head->name, head->address, head->bdate->day,head->bdate->month,head->bdate->year, head->phone_nr);
+        for(i = 0; i < 3; i++) {
+            fprintf(fp,",");
+            if (temp->info == NULL)
+                fprintf(fp, "None");
+            else
+                fprintf(fp, temp->info->name);
+            temp = temp->next;
+        }
+        fprintf(fp,",");
+        fprintf(fp,head->hot);
+        while(pdis){
+            fprintf(fp,",");
+            fprintf(fp,pdis->info->name);
+            pdis = pdis->next;
+        }
+        fprintf(fp,"\n");
         head = head->next;
-        free(locals);
-        free(pdis);
     }
     fclose(fp);
-}
-
-char *generate_locals(struct local_pointers* local){
-    /*Generates the string with all the locals*/
-    int i = 0;
-    char string[200], *temp;
-    memset(string,0,strlen(string));
-    local = local->next; /*Skip Header*/
-    for(i = 0; i < 3; i++){
-        if(local->info == NULL){
-            if( i == 2 ) {
-                strcat(string, "None");
-            }
-            else
-                strcat(string, "None,");
-        }
-        else{
-            if( i ==2 ){
-            temp = malloc((strlen(local->info->name) * sizeof(char)));
-            strcpy(temp,local->info->name);
-            }
-            else {
-                temp = malloc((strlen(local->info->name) + 1) * sizeof(char));
-                strcpy(temp,local->info->name);
-                strcat(temp, ",");
-            }
-            strcat(string,temp);
-            free(temp);
-        }
-        local = local->next;
-    }
-    //puts(string);
-    temp = malloc(strlen(string) * sizeof(char));
-    strcpy(temp, string);
-    return temp;
-}
-
-char* generate_pdis(struct pdi_pointers* pdis){
-    /*Helps write-out -> Generates a string with all user pdis */
-    char string[200], *temp;
-    memset(string,0,strlen(string));
-    if(pdis->next == NULL) {
-        temp = malloc(0);
-        return temp;
-    }
-    else{
-        pdis = pdis->next; /*Skip Header*/
-    }
-    while(pdis){
-        if(pdis->next == NULL) {
-            temp = malloc((strlen(pdis->info->name)) * sizeof(char));
-            strcpy(temp, pdis->info->name);
-        }
-        else{
-            temp = malloc((strlen(pdis->info->name) + 1) * sizeof(char));
-            strcpy(temp, pdis->info->name);
-            strcat(temp,",");
-        }
-        strcat(string,temp);
-        free(temp);
-        pdis = pdis->next;
-    }
-    temp = malloc((strlen(string) + 1) * sizeof(char));
-    strcat(temp,",");
-    strcat(temp, string);
-    return temp;
 }
 
 void registration(struct User* head, struct local* local_head) {
@@ -405,9 +319,8 @@ void registration(struct User* head, struct local* local_head) {
     int number, valid = 0, i = 0, valid_ph = 0;
     struct User *new = malloc(sizeof(struct User));
     char buffer[BUFFER_SIZE];
-
     while (head->next != NULL) {
-        /*travel to the end of the list*/
+        /*Travel to the end of the list*/
         head = head->next;
     }
     getchar();
@@ -428,7 +341,6 @@ void registration(struct User* head, struct local* local_head) {
     printf("Name: ");
     fgets(buffer, BUFFER_SIZE, stdin);
     buffer[strcspn(buffer, "\n")] = 0;
-    free(new->name);
     new->name = malloc(strlen(buffer)* sizeof(char));
     strcpy(new->name, buffer);
     memset(buffer,0,strlen(buffer));
@@ -436,13 +348,13 @@ void registration(struct User* head, struct local* local_head) {
     printf("Address: ");
     fgets(buffer, BUFFER_SIZE, stdin);
     buffer[strcspn(buffer, "\n")] = 0;
-    free(new->address);
     new->address = malloc(strlen(buffer) * sizeof(char));
     strcpy(new->address, buffer);
     memset(buffer, 0, strlen(buffer));
 
 
     printf("Birth-date(Day/Month/Year): ");
+    new->bdate = malloc(sizeof(struct date));
     while(1){
         do {
             number = get_option();
@@ -458,15 +370,16 @@ void registration(struct User* head, struct local* local_head) {
         new->bdate->month = number;
         do {
             number = get_option();
-            if (number < 1900 || number > 2019)
+            if (number < 1900 || number > 2010)
                 puts("Invalid Number");
-        } while (number < 1900 || number > 2019);
+        } while (number < 1900 || number > 2010);
         new->bdate->year = number;
         if (valid_date(new->bdate))
             break;
         puts("That date does not exist");
     }
 
+    getchar();
     while(!valid_ph){
         printf("Phone Number: ");
         fgets(buffer,BUFFER_SIZE, stdin);
@@ -476,7 +389,6 @@ void registration(struct User* head, struct local* local_head) {
             puts("Invalid Phone Number");
         }
         else{
-            free(new->phone_nr);
             new->phone_nr = malloc(strlen(buffer) * sizeof(char));
             strcpy(new->phone_nr, buffer);
             memset(buffer, 0, strlen(buffer));
@@ -504,7 +416,6 @@ void registration(struct User* head, struct local* local_head) {
 
     new->hot = malloc(strlen("None") * sizeof(char));
     strcpy(new->hot, "None");
-    new->hot[strcspn(new->hot, "\n")] = 0;
 
     new->pdis = create_pdi_pointers();
     new->next = NULL;
@@ -548,18 +459,7 @@ void tail_insert_user_pointer(struct user_pointers* u, struct User* user){
     u->next = new;
 }
 
-void print_popularity_local(struct local* head){
-    /*Prints the a given local name and its popularity*/
-    head = head->next;
-    while(head){
-        head->users_info = head->users_info->next;
-        while(head->users_info != NULL){
-            printf("%s: %s \n",head->name,head->users_info->user->name);
-            head->users_info = head->users_info->next;
-        }
-        head = head->next;
-    }
-}
+
 
 void update_locals_users_pointers(struct local_pointers* u, struct User* user){
     /*Have to use this in order not to modify inside content*/
@@ -603,20 +503,6 @@ void update_pdi_users_pointers(struct pdi_pointers* u, struct User* user) {
 
     }
 }
-
-void print_popularity_pdi(struct PDI* head){
-    /*Prints user which have fovorite PDI's*/
-    head = head->next;
-    while(head){
-        head->users_info = head->users_info->next;
-        while(head->users_info != NULL){
-            printf("%s: %s \n",head->name,head->users_info->user->name);
-            head->users_info = head->users_info->next;
-        }
-        head = head->next;
-    }
-}
-
 /*---------------------------------------------------------------------------------------*/
 
 void change_locals(struct User *u, struct local* local_head) {
@@ -846,7 +732,7 @@ int count_popularity(struct user_pointers* head){
     return counter - 1;
 }
 
-void generate_trip(struct User * u,struct local* local_head, struct PDI* pdi_head, struct User* user_head, struct PDI** pdi_pop_array, int pdi_pop_array_size){
+void generate_trip(struct User * u, struct PDI* pdi_head, struct User* user_head, struct PDI** pdi_pop_array, int pdi_pop_array_size){
     /*Generates the desired trip for the user*/
     struct PDI** blockA, **blockB, **blockC;
     if(u->locals->next->info == NULL || u->locals->next->next->info == NULL || u->locals->next->next->next->info == NULL){
@@ -857,7 +743,6 @@ void generate_trip(struct User * u,struct local* local_head, struct PDI* pdi_hea
         blockB = generate_per_local(pdi_head,u,u->locals->next->next->info, pdi_pop_array,pdi_pop_array_size);
         blockC = generate_per_local(pdi_head,u,u->locals->next->next->next->info,pdi_pop_array,pdi_pop_array_size);
         printf("Your trip is rated %.2lf%% according to our popularity tax calculator\n", popularity_tax_calculator(blockA, blockB, blockC, user_head, u, pdi_head));
-
     }
 }
 
@@ -872,7 +757,6 @@ struct PDI ** generate_per_local(struct PDI* pdi_head,struct User *u,struct loca
         printf("\t-->%s \n", u->hot);
         array[counter++] = temp;
     }
-        //print_popularity_order_pdi(pdi_pop_array,pdi_pop_array_size);
             for (i = 0; counter < 3 && i < (pdi_pop_array_size); i++) {
                 if(strcmp(pdi_pop_array[i]->local, local->name) == 0 && pdi_in_user(u->pdis, pdi_pop_array[i]) && !check_array(array,counter,pdi_pop_array[i])){
                         printf("\t-->%s \n", pdi_pop_array[i]->name);
@@ -916,24 +800,17 @@ int pdi_in_user(struct pdi_pointers* user_pdis, struct PDI *pdi){
 
 double popularity_tax_calculator(struct PDI** blockA, struct PDI** blockB,struct PDI** blockC,struct User* user_head,struct User* user, struct PDI* pdi_head){
     /*Calculates the popularity of a trip*/
-    double result = 0, valueA = 0, valueB = 0, valueC = 0, totalA = 0, totalB = 0, totalC = 0;
+    double valueA = 0, valueB = 0, valueC = 0, totalA = 0, totalB = 0, totalC = 0;
     int i = 0;
     totalA = count_users(user_head);
     totalB = totalA;
     totalC = total_popularity(pdi_head);
     valueA = user_local_selected(user_head, user->locals->next->info, user->locals->next->next->info, user->locals->next->next->next->info);
     for(i = 0; i < 3;i++){
-        valueB += check_hot(user_head,blockA[i]);
-        valueB += check_hot(user_head,blockB[i]);
-        valueB += check_hot(user_head,blockC[i]);
-        valueC += add_popularity(blockA[i]);
-        valueC += add_popularity(blockB[i]);
-        valueC += add_popularity(blockC[i]);
+        valueB += check_hot(user_head,blockA[i]) + check_hot(user_head,blockB[i]) + check_hot(user_head,blockC[i]);
+        valueC += blockA[i]->popularity + blockB[i]->popularity + blockC[i]->popularity;
     }
-    result += (valueA/totalA) * 0.33;
-    result += (valueB/totalB) * 0.33;
-    result += (valueC/totalC) * 0.33;
-    return result * 100;
+    return ((valueA/totalA) * 0.33 + (valueB/totalB) * 0.33 + (valueC/totalC) * 0.33) *100;
 }
 int check_hot(struct User* user_head, struct PDI* pdi){
     /*Checks if a PDI is a user's hot for every user, returns the number of times that happens*/
@@ -963,7 +840,6 @@ int check_array(struct PDI** pdi_array, int size, struct PDI* pdi){
     /*Checks if the PDI already exists in the array. Returns 1 if true 0 if false*/
     int i = 0;
     for(i = 0; i < size; i++){
-        //printf(" %s:%s",pdi_array[i]->name, pdi->name);
         if(strcmp(pdi_array[i]->name,pdi->name) ==0)
             return 1;
     }
@@ -992,10 +868,6 @@ int user_local_selected(struct User* user_head, struct local* localA, struct loc
     return counter;
 }
 
-int add_popularity(struct PDI* pdi){
-    /*Returns the popularity of a PDI*/
-    return pdi->popularity;
-}
 int total_popularity(struct PDI* pdi_head){
     /*Returns de popularity of all PDI´s*/
     int count = 0;

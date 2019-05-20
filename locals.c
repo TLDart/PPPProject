@@ -7,7 +7,6 @@
 #define BUFFER_SIZE 50
 
 /*Local*/
-
 struct local* create_list_local(void){
     /* Creates a linked list for locals*/
     struct local* aux;
@@ -17,7 +16,6 @@ struct local* create_list_local(void){
     }
     return aux;
 }
-
 
 struct local* load_local(struct PDI* pdi_head, struct local* local_head){
     /* Loads current local data into a linked list*/
@@ -30,11 +28,9 @@ struct local* load_local(struct PDI* pdi_head, struct local* local_head){
         local = local_exists(local_head, cpy_pdi->local);
         /* If the local does not exist, we wanna create a new one*/
         if(!local){
-            //Create the local and assign a name
             new_local = malloc(sizeof(struct local));
             new_local->name = malloc(strlen(cpy_pdi->local));
             strcpy(new_local->name, cpy_pdi->local);
-
             new_local->info = create_pdi_pointers();
             /*Insert the pdi in order*/
 
@@ -44,9 +40,6 @@ struct local* load_local(struct PDI* pdi_head, struct local* local_head){
 
             new->next = NULL;
             new_local->info->next = new;
-
-
-            //puts(new->info->name);
             /*Insert the local in alpha order */
             searching_local(local_head, new_local->name, &ant, &useless);
             new_local->next = ant->next;
@@ -55,18 +48,7 @@ struct local* load_local(struct PDI* pdi_head, struct local* local_head){
             /*If the local exists*/
         else{
             tail_insert_pdi_pointers(local->info, cpy_pdi);
-            //puts(local->name);
-            /*
-            new = malloc(sizeof(struct pdi_pointers));
-            new->info = cpy_pdi;
-            new->next = NULL;
-            //puts(new->info->name);
-            searching_pdi_pointers(local->info, new->info->name, &ant1,&useless1);
-            new->next = ant1->next;
-            ant1->next = new;
-            */
         }
-        //print_local_list(local_head);
         cpy_pdi = cpy_pdi->next;
     }
 }
@@ -78,7 +60,6 @@ struct local* local_exists(struct local* head, char* name){
         //puts(head->name);
         while (head != NULL) {
             if (strcmp(head->name, name) == 0) {
-                //printf(" |||%s %s ||| \n",head->name, name );
                 return head;
             }
             head = head->next;
@@ -105,15 +86,6 @@ int print_local_list(struct local *head){
     head = head->next;
     while (head ){
         printf("->%s\n",head ->name);
-        /*
-        head->info = head->info->next;
-        //puts("PDI's");
-        //puts(head->info->info->name);
-        while(head->info != NULL && head->info->info->name != NULL){
-            printf("\t --->%s \n",head->info->info->name);
-            head->info = head->info->next;
-        }
-        */
         print_pdi_pointers(head->info);
         head =head ->next;
     }
@@ -138,25 +110,18 @@ void parse_local(struct local* local_head, struct local_pointers* insert, char *
     }
     struct local_pointers* temp = malloc(sizeof(struct local_pointers));
     struct local* local = local_exists(local_head, name);
-    if(local){
-        //puts(local->name);
+    if(local)
         temp->info = local;
-        temp->next = NULL;
-        insert->next = temp;
-
-    }
-    else{
+    else
         temp->info = NULL;
-        temp->next = NULL;
-        insert->next = temp;
-    }
 
+    temp->next = NULL;
+    insert->next = temp;
 }
-
+/*-----------------------------------------------------------------------------------------------------------------------*/
 struct local_pointers* create_locals_pointers(void){
     /* Creates a linked list for PDIs*/
-    struct local_pointers* aux;
-    aux = (struct local_pointers*) malloc(sizeof(struct PDI));
+    struct local_pointers* aux =(struct local_pointers*) malloc(sizeof(struct PDI));
     if(aux != NULL){
         aux->next = NULL;
     }
@@ -167,7 +132,6 @@ void print_local_pointers(struct local_pointers * locals){
     /*Runs though a local pointers and prints its content*/
     locals = locals->next;
     while(locals != NULL){
-
         if(locals->info != NULL){
             printf("\t-> %s\n",locals->info->name);
         }
@@ -203,7 +167,7 @@ int count_local(struct local *head){
 struct local** create_popularity_order(struct local* local_head, int size){
     /*Main function that both creates and sorts local popularity array*/
     struct local** local_head_popularity = add_pointers_locals(local_head, size);
-    bubble_sort_popularity_local(local_head_popularity,size, 0);
+    bubble_sort_popularity_local(local_head_popularity,size);
     //print_popularity_order(local_head_popularity, n);
     return local_head_popularity;
     }
@@ -228,12 +192,10 @@ void print_popularity_order(struct local** popularity_array,int size){
     }
 }
 
-void bubble_sort_popularity_local(struct local** array,int n, int ascending){
+void bubble_sort_popularity_local(struct local** array,int n){
     /*Bubble sorts the array of locals by popularity*/
     struct local * temp;
     int i, j;
-    if (ascending == 0) {
-
         for (i = 0; i < n - 1; i++) {
             // Last i elements are already in place
             for (j = 0; j < n - i - 1; j++) {
@@ -245,20 +207,6 @@ void bubble_sort_popularity_local(struct local** array,int n, int ascending){
             }
         }
     }
-    else{
-        for (i = 0; i < n - 1; i++) {
-            // Last i elements are already in place
-            for (j = 0; j < n - i - 1; j++) {
-                if (array[j]->popularity > array[j + 1]->popularity) {
-                    temp = array[j + 1];
-                    array[j + 1] = array[j];
-                    array[j] = temp;
-                }
-            }
-        }
-    }
-}
-
 void print_local_and_pdi_pop(struct local** local_array_popularity, struct PDI** local_pdi_popularity, int local_size, int size_pdi){
     /*Prints a list with both locals PDI's organized by popularity*/
     int i = 0, j = 0;

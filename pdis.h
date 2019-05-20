@@ -37,6 +37,7 @@ void insert_popularity_pdi(struct PDI* head);
 int count_pdi_number(struct PDI *head);
 struct PDI** create_popularity_order_pdi(struct PDI* pdi_head, int size);
 void print_popularity_order_pdi(struct PDI** popularity_array,int size);
-void bubble_sort_popularity_pdi(struct PDI** array,int n, int ascending);
+void bubble_sort_popularity_pdi(struct PDI** array,int n);
 
+void search_pdi_database(struct PDI* pdi_head);
 #endif //NEW_PROJECT_AND_THIS_TIME_IT_WILL_WORK____PDIS_H

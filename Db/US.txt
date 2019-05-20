@@ -1,21 +1,74 @@
-Grand Canyon National Park,Arizona,Do not know to not care,12:00-16:00
-Statue of Liberty National Monument,New York,Do not know to not care,08:00-19:0
-Yosemite National Park,California,Do not know to not care,12:00-19:00
-Yellowstone National Park,Wyoming,Do not know to not care,06:00-16:00
-Disneyland Park,California,Do not know to not care,08:00-20:00
-Central Park,New York,Do not know to not care,10:00-20:00
-Golden Gate Bridge,California,Do not know to not care,07:00-17:00
-Empire State Building,New York,Do not know to not care,09:00-19:00
-Zion National Park,Utah,Do not know to not care,10:00-20:00
-Bryce Canyon National Park,Utah,Do not know to not care,06:00-18:00
-Walt Disney World Resort,Florida,Do not know to not care,07:30-18:00
-Hoover Dam,Arizona,Do not know do ont care, 06:00-17:30
-Arches National Park,Utah,Do not know do Not care,08:00-16:40
-Florida Keys,Florida,Florida,Do not know do Not care,08:00-16:40
-Everglades National Park,Florida,Do not know do Not care,08:00-16:40
-Universal Studios Florida,Florida,Do not know do Not care,12:00-18:00
-Antelope Canyon,Arizona,Do not know do Not care,09:00-15:00
-Monument Valley,Arizona,Do not know do Not care,12:00-17:00
-Grand Canyon Village,Arizona,Do not know do Not care,06:00-18:00
-Grand Teton National Park,Wyoming,Do not know do Not care,09:00-17:00
-Devils Tower National Monument,Wyoming,Geologic landmark with a storied past, 00:00-00:00
+Grand Canyon National Park-Arizona-Beyond its scenic overlooks, this mile-deep geologic wonder features hikes, mule rides & rafting-12:00/16:00
+Statue of Liberty National Monument-New York-Iconic National Monument opened in 1886, offering guided tours, a museum & city views-08:00/19:00
+Yosemite National Park-California-Iconic national park offers an array of options such as hiking among redwoods & river rafting-12:00/19:00
+Yellowstone National Park-Wyoming-Renowned park since 1872 is home to mountains, animals & the world's largest collection of geysers/06:00-16:00
+Disneyland Park-California-Iconic amusement park featuring 8 themed "lands" with rides, shows & costumed characters-08:00/20:00
+Central Park-New York-Sprawling park with pedestrian paths & ballfields, plus a zoo, carousel, boat rentals & a reservoir-/10:00-20:00
+Golden Gate Bridge-California-Famed 4,200ft. art deco suspension bridge open to car, bike & foot traffic-07:00/17:00
+Empire State Building-New York-Iconic, art deco office tower from 1931 with exhibits & observatories on the 86th & 102nd floors-09:00/19:00
+Zion National Park-Utah-Home to Zion Canyon, this vast national park offers trails, climbing, camping & more-10:00/20:00
+Bryce Canyon National Park-Utah-Park with overlooks & trails offering views of towering spires (hoodoos) & a natural amphitheater-06:00/18:00
+Miami-Florida-Officially the City of Miami, is the cultural, economic and financial center of South Florida-00.00/00:00
+Hoover Dam-Arizona-Hoover Dam is a concrete arch gravity dam in the Black Canyon of the Colorado River, on the border between the U.S states of Nevada and Arizona-06:00/17:30
+Canyonlands National Park-Utah-Split by 2 rivers, this majestic park in 4 zones features sandstone spires & Island in the Sky mesa-08:00/16:40
+Florida Keys-Florida-The Florida Keys are a string of tropical islands stretching about 120 miles off the southern tip of the U.S. state of Florida-08:00/16:40
+Ocean Drive-Florida-Ocean Drive is a major thoroughfare in the South Beach neighborhood of Miami Beach-08:00/16:40
+Universal Studios Florida-Florida-Themed park and production studio located in Orlando-12:00/18:00
+Grand Canyon Skywalk-Arizona-Horseshoe shaped bridge made of glass allowing visitors to walk 4,000 ft above the canyon floor-09:00/15:00
+Monument Valley-Arizona-This famous natural area on the Navajo Nation Reservation features towering red sandstone buttes-12:00/17:00
+Grand Canyon Village-Arizona-Grand Canyon Village is a census-designated place located on the South Rim of the Grand Canyon-06:00/18:00
+Grand Teton National Park-Wyoming-Tranquil spot with plenty of wildlife plus hiking, rafting & swimming among valleys & mountains-09:00/17:00
+Devils Tower National Monument-Wyoming-Geologic landmark with a storied past-00:00/00:00
+Arches National Park-Utah-Scenic area offering camping & a variety of hiking trails with red rock vistas & 2,500 stone arches-9:00/17:00
+Universal Studios Hollywood-California-Sprawling amusement park with a cinema theme, featuring rides, restaurants, shops & shows-9:00/17:00
+Hawai Volcanoes National Park-Hawai-Unique destination to spot live lava flows, lava tubes & glowing craters is popular with tourists-9:00/17:00
+Diamond Head-Hawai-Iconic volcanic peak, home to hiking trails & remains of historical military fortifications-10:00/19:00
+Hanauma Bay-Hawai-Nature preserve with a beach & turtles-This popular nature preserve on a bay features a beach, green sea turtles, parrotfish & more-09:00/17:00
+Kilauea-Hawai-This active volcano has been continuously erupting since 1983 & sees over 2 million yearly visitors-12:00/18:00
+Acadia National Park-Maine-47,000 acre park covering woodland, granite peaks & rocky shores, offering camping, hiking & more-07:30/19:00
+Mount Katahdin-Maine-The highest mountain in Maine, this is the northern terminus of the Appalachian Trail-00:00/00:00
+Cadillac Mountain-Maine-1,530foot mountain providing a trail marked with informative plaques & expansive views at the top-00:00/00:00
+Gulf State Park-Alabama-Serene park with beaches, trails & pier fishing plus tennis, golf & a zip line above the dunes-08:00/20:00
+Cheaha State Park-Alabama-Basic rooms, rustic cabins & chalets with fireplaces, plus a restaurant in a picturesque backdrop-08:00/15:00
+U.S. Space & Rocket Center-Alabama-Saturn V rocket & other attractions at a space museum with interactive exhibits & artifacts-09:00/17:00
+USS Alabama-Alabama-WWII-era battleship docked at a memorial park. Visitors can board & explore via self-guided tours- 09:30/18:00
+Cedar Point-Ohio-Sprawling amusement park with a wide range of water slides, thrill rides, coasters & entertainment-09:00/21:00
+Cincinnati Zoo & Botanical Garden-Ohio-Animal park & conservatory with 3,000+ plant species, wildlife exhibits, rides & a 4D theater-07:30/17:00
+Kings Island-Ohio-Large amusement & water park with a wave pool, roller coasters & a lifelike dinosaur exhibit & more- 09:00/23:00
+Indianapolis Zoo-Indiana-Zoo with an aquarium, rides, shows, petting & play areas, plus an indoor/outdoor garden-10:00/19:00
+Indianapolis Motor Speedway-Indiana-Famed speedway home to the Indy 500 & many other races, plus on-site museum, tours & golf course-09:30/18:00
+The Children's Museum of Indianapolis-Indiana-Indiana-Huge, interactive kids' museum includes a planetarium, carousel, science labs, library & much more-08:30/17:00
+George Washington's Mount Vernon-Virginia-George Washington's vast estate, furnished with period pieces & the president's own belongings-08:00/18:00
+Arlington National Cemetery-Virginia-Vast military cemetery featuring JFK’s eternal flame, Memorial Amphitheater & Tomb of the Unknowns-7:30/18:00
+Luray Caverns-Virginia-Massive underground lair with 140-ft. natural columns, colorful stalactites & brick walkways-09:30/16:00
+Philadelphia Museum of Art-Pennsylvania-Majestic space with famed entry staircase featuring Renaissance classics & special exhibits-10:00/17:00
+Independence Hall-Pennsylvania-This 1753 building is the historic signing site of the Declaration of Independence & constitution-10:00/18:00
+Liberty Bell-Pennsylvania-Last rung in 1846, this 2,080-pound icon of freedom features a biblical inscription & a famed crack-09:00/19:00
+Georgia Aquarium-Georgia-One of world's largest aquariums, with permanent exhibits, interactive galleries & animals galore-09:00/21:00
+World of CocaCola-Georgia-Memorabilia, films & exhibits (some interactive) about soft drink that debuted in Atlanta in 1886-10:00/17:00
+Rock City Gardens-Georgia-Ancient rock formations, gardens & panoramic views of 7 states draw visitors to this walking trail-08:30/18:00
+Millennium Park-Illinois-24.5 acre green space with a video display, the reflective "Bean" sculpture & an outdoor theater-06:00/23:00
+Willis Tower-Illinois-Iconic, 110-story skyscraper featuring expansive views of Chicago from its 103rd-story Skydeck-09:00/17:00
+Navy Pier-Illinois-Former Navy training center draws crowds with carnival rides, restaurants, shops & fireworks-08:30/20:00
+Sleeping Bear Dunes National Lakeshore-Michigan-Sprawling nature preserve offering seaside shores, sand dunes, lakes, trails & many campsites-00:00/00:00
+Mackinac Island-Michigan-Mackinac Island sits in Lake Huron, between Michigan’s Upper and Lower peninsulas-00:00/00:00
+Pictured Rocks National Lakeshore-Michigan-Park offers 40 miles of lakeshore & 100 miles of trails winding through a northern hardwood forest-00:00/00:00
+Lincoln Memorial-Washington-Parthenon-inspired tribute to Abraham Lincoln with a 19-ft. marble statue, murals & reflecting pool-00.00/00:00
+The White House-Washington-Landmark, historic home & office of the United States president, with tours for visitors-09:00/17:00
+National Mall-Washington-Washington Monument plus memorials to Lincoln, MLK, FDR, WWII & Vietnam vets along a grassy mall-00.00/00:00
+Biltmore-North Carolina-George W. Vanderbilt’s iconic French Renaissance château features 250 rooms, lavish gardens & tours-09:00/17:00
+Pisgah National Forest-North Carolina-Vast park boasts forests, waterfalls, peaks & rivers, with on-site camping, hiking & picnic space-00:00/00:00
+Clingmans Dome-North Carolina-Mountain with a seasonal road, paved trail & observation tower, plus an information center & store-00:00/00:00
+The Paul Revere House-Massachusetts-Revere's legendary ride began at this restored Colonial era home, which includes family furnishings.-11:00/19:00
+Boston Common-Massachusetts-Storied, nearly 50-acre urban park that hosted British troops during the American Revolution-09:00/17:00
+Fenway Park-Massachusetts-Historic, small-capacity ballpark, home of the Red Sox & occasional big-name concert venue-12:00/15:00
+Dollywood-Tennesse-Dollywood is a theme park jointly owned by entertainer Dolly Parton and Herschend Family Entertainment-09:00/17:00
+Graceland-Tennesse-Elvis Presley's famed estate featuring mansion tours, exhibits, a car museum & 2 jets-09:00/16:00
+Grand Ole Opry-Tennesse-Visitors come for daily tours & weekly live radio shows featuring classic & new country acts-09:00/15:00
+Big Bend National Park-Texas-801,163 acres of river canyons, desert & mountains with abundant wildlife & outdoor activities-00:00/00:00
+San Antonio River Walk-Texas-Iconic area with landscaped walkways, bridges, restaurants, bars, hotels, shops & boat tours-00:00/00:00
+The Alamo-Texas-Small, shrinelike fortress & monument to Texas history with a museum, artifacts, gardens & more- 09:00/17:30
+Denali National Park and Preserve-Alaska-This 6 million-acre park with wildlife & tours is home to Denali, the nation’s highest peak-9:30/18:30
+Kenai Fjords National Park-Alaska-Picturesque park on the Kenai Peninsula featuring a huge ice field of glaciers & diverse wildlife-08:30/17:00
+Mendenhall Glacier-Alaska-A 13-mile-long glacier in national forest with a visitor center, hiking trails & waterfall-00:00/00:00
+Glacier Bay National Park and Preserve-Alaska-Vast, mountainous park with varied wildlife on land & sea, plus cruise ships, hiking & ranger tours-00:00/00:00
