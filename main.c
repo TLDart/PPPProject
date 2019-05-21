@@ -98,10 +98,11 @@ void user_interface_main(struct User* user, struct User* user_head, struct PDI* 
             if(option == 0 || option == 9){
                 break;
             }
-            if(option == 1){
+            else if(option == 1){
                 print_local_list(local_head);
+
             }
-            if(option == 2){
+            else if(option == 2){
                 update_pdi_and_local_popularity(local_array_popularity,pdi_array_popularity,local_nr, pdi_nr,local_head, pdi_head);
                 print_local_and_pdi_pop(local_array_popularity,pdi_array_popularity,local_nr, pdi_nr);
             }

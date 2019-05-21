@@ -128,7 +128,7 @@ struct User* validate_login(struct User* head, char* username, char* password){
 }
 void edit_personal_info(struct User *user_head, struct User *user, struct local* local_head, struct PDI* pdi_head){
     /*This function lets the user change the default settings */
-    char option;  int valid = 0,valid_ph = 0, number;
+    char option;int number;
     char buffer[BUFFER_SIZE];
     /* Prompts user to change his info */
     while(1){
@@ -141,45 +141,57 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
         if (option ==1){
             getchar();
             puts(" You can't change you username");
-            //getchar();
         }
         if (option == 2) {
             getchar();
-            while (!valid) {
+            while (1) {
                 printf("(No whitespace)Password: ");
                 fgets(buffer, BUFFER_SIZE, stdin);
                 buffer[strcspn(buffer, "\n")] = 0;
-                valid = check_if_valid(buffer); /* Verifies if the password contains a whitespace */
-                if (valid == 0) {
-                    puts("Invalid password");
-                }
-                else{
+                if (check_space(buffer) && !contains_special(buffer) && strcmp(buffer,"") != 0) {
                     free(user->password);
                     user->password = malloc(strlen(buffer) * sizeof(char));
                     strcpy(user->password, buffer);
+                    break;
                 }
+                else
+                    puts("Invalid password");
                 memset(buffer,0,strlen(buffer));
             }
         }
         if (option == 3) {
             getchar();
-            printf("Name: ");
-            fgets(buffer, BUFFER_SIZE, stdin);
-            buffer[strcspn(buffer, "\n")] = 0;
-            free(user->name);
-            user->name = malloc(strlen(buffer)* sizeof(char));
-            strcpy(user->name, buffer);
-            memset(buffer,0,strlen(buffer));
+            while(1){
+                printf("Name: ");
+                fgets(buffer, BUFFER_SIZE, stdin);
+                buffer[strcspn(buffer, "\n")] = 0;
+                if(!contains_special(buffer) && strcmp(buffer,"") != 0) {
+                    free(user->name);
+                    user->name = malloc(strlen(buffer) * sizeof(char));
+                    strcpy(user->name, buffer);
+                    break;
+                }
+                else
+                    puts("Invalid Name");
+                memset(buffer, 0, strlen(buffer));
+            }
         }
-        if (option ==4){
+        if (option == 4){
             getchar();
+            while(1){
             printf("Address: ");
             fgets(buffer,BUFFER_SIZE, stdin);
             buffer[strcspn(buffer, "\n")] = 0;
-            free(user->address);
-            user->address = malloc(strlen(buffer)* sizeof(char));
-            strcpy(user->address, buffer);
+            if(!contains_special(buffer) && strcmp(buffer,"") != 0) {
+                free(user->address);
+                user->address = malloc(strlen(buffer)* sizeof(char));
+                strcpy(user->address, buffer);
+                break;
+            }
+            else
+                puts("Invalid Address");
             memset(buffer,0,strlen(buffer));
+            }
         }
 
         if (option ==5) {
@@ -211,20 +223,19 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
         }
         if (option == 6){
             getchar();
-            while(!valid_ph){
+            while(1){
             printf("Phone Number: ");
             fgets(buffer,BUFFER_SIZE, stdin);
             buffer[strcspn(buffer, "\n")] = 0;
-            valid_ph = valid_number(buffer);
-                if (valid_ph == 0){
-                    puts("Invalid Phone Number");
-                }
-                else{
-                    free(user->phone_nr);
-                    user->phone_nr = malloc(strlen(buffer) * sizeof(char));
-                    strcpy(user->phone_nr, buffer);
-                    memset(buffer, 0, strlen(buffer));
-                }
+            if (valid_number(buffer) && !contains_special(buffer) && strcmp(buffer, "") != 0) {
+                free(user->phone_nr);
+                user->phone_nr = malloc(strlen(buffer) * sizeof(char));
+                strcpy(user->phone_nr, buffer);
+                break;
+            }
+            else
+                puts("Invalid Phone Number");
+            memset(buffer, 0, strlen(buffer));
             }
         }
         if(option == 7){
@@ -238,14 +249,12 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
         if(option == 9){
             change_pdis(user, pdi_head);
         }
-        valid = 0;
-        valid_ph = 0;
     }
     update_local_popularity(user_head,local_head);
     update_pdi_popularity(user_head,pdi_head);
 }
 
-int check_if_valid(char *string) {
+int check_space(char *string) {
     /*Checks if the string contains whitespace */
     int i = 0;
     for (i = 0; string[i] != '\0'; i++) {
@@ -254,6 +263,18 @@ int check_if_valid(char *string) {
         }
     }
     return 1;
+}
+
+int contains_special(char* string){
+    /*Checks if the string contains special characters, if so returns 1*/
+    int i = 0;
+    for(i = 0; string[i] != '\0'; i++) {
+        if ((string[i] < 65 || string[i] > 90) && (string[i] < 94 || string[i] > 123) &&  string[i] !=' ' && (string[i] < 48 || string[i] > 57)) {
+            return 1;
+        }
+    }
+    return 0;
+
 }
 
 int valid_number(char *ph_nr){
@@ -282,6 +303,16 @@ int valid_date(struct date* d){
     return 1;
 }
 
+int user_exists(struct User* head, char* string){
+    head = head->next;
+    while(head){
+        if(strcmp(head->name, string) == 0){
+            return 1;
+        }
+        head = head->next;
+    }
+    return 0;
+}
 void write_out(char* path, struct User* head){
     int i = 0;
     FILE *fp;
@@ -316,42 +347,51 @@ void write_out(char* path, struct User* head){
 
 void registration(struct User* head, struct local* local_head) {
     /* This function is able to register the current user into the database system */
-    int number, valid = 0, i = 0, valid_ph = 0;
+    int number, i = 0;
     struct User *new = malloc(sizeof(struct User));
     char buffer[BUFFER_SIZE];
-    while (head->next != NULL) {
-        /*Travel to the end of the list*/
-        head = head->next;
-    }
     getchar();
     /*Get user Input*/
-    while (!valid) {
+    while (1) {
         printf("(No whitespace)Username: ");
         fgets(buffer, BUFFER_SIZE, stdin);
         buffer[strcspn(buffer, "\n")] = 0; /*Remove the trailing \n */
-        new->username = malloc(strlen(buffer) * sizeof(char));
-        strcpy(new->username, buffer);
-        valid = check_if_valid(new->username); /* Verifies if the user contains a whitespace */
-        if (valid == 0) {
-            printf("Invalid username");
+        if (check_space(buffer) && !user_exists(head, buffer) && !contains_special(buffer) && strcmp(buffer,"") != 0) {
+            new->username = malloc(strlen(buffer) * sizeof(char));
+            strcpy(new->username, buffer);
+            break;
         }
+        else
+            puts("Username is invalid or already taken");
+        memset(buffer,0,strlen(buffer));
     }
-    valid = 0;
+    while(1){
+        printf("Name: ");
+        fgets(buffer, BUFFER_SIZE, stdin);
+        buffer[strcspn(buffer, "\n")] = 0;
+        if(!contains_special(buffer) && strcmp(buffer,"") != 0){
+            new->name = malloc(strlen(buffer) * sizeof(char));
+            strcpy(new->name, buffer);
+            break;
+        }
+        else
+            puts("Invalid Name");
+        memset(buffer, 0, strlen(buffer));
+    }
 
-    printf("Name: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-    buffer[strcspn(buffer, "\n")] = 0;
-    new->name = malloc(strlen(buffer)* sizeof(char));
-    strcpy(new->name, buffer);
-    memset(buffer,0,strlen(buffer));
-
-    printf("Address: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-    buffer[strcspn(buffer, "\n")] = 0;
-    new->address = malloc(strlen(buffer) * sizeof(char));
-    strcpy(new->address, buffer);
-    memset(buffer, 0, strlen(buffer));
-
+    while(1){
+        printf("Address: ");
+        fgets(buffer, BUFFER_SIZE, stdin);
+        buffer[strcspn(buffer, "\n")] = 0;
+        if(!contains_special(buffer) && strcmp(buffer,"") != 0) {
+            new->address = malloc(strlen(buffer) * sizeof(char));
+            strcpy(new->address, buffer);
+        break;
+        }
+        else
+            puts("Invalid Address");
+        memset(buffer, 0, strlen(buffer));
+    }
 
     printf("Birth-date(Day/Month/Year): ");
     new->bdate = malloc(sizeof(struct date));
@@ -380,33 +420,36 @@ void registration(struct User* head, struct local* local_head) {
     }
 
     getchar();
-    while(!valid_ph){
+    while(1){
         printf("Phone Number: ");
         fgets(buffer,BUFFER_SIZE, stdin);
         buffer[strcspn(buffer, "\n")] = 0;
-        valid_ph = valid_number(buffer);
-        if (valid_ph == 0){
-            puts("Invalid Phone Number");
-        }
-        else{
+        if (valid_number(buffer) && !contains_special(buffer) && strcmp(buffer,"") != 0){
             new->phone_nr = malloc(strlen(buffer) * sizeof(char));
             strcpy(new->phone_nr, buffer);
-            memset(buffer, 0, strlen(buffer));
+
+            break;
+
         }
+        else
+            puts("Invalid Phone Number");
+        memset(buffer, 0, strlen(buffer));
     }
 
 
-    while (!valid) {
+    while (1) {
         printf("(No whitespace)Password: ");
         fgets(buffer, BUFFER_SIZE, stdin);
         buffer[strcspn(buffer, "\n")] = 0;
-        valid = check_if_valid(buffer); /* Verifies if the password contains a whitespace */
-        new->password = malloc(strlen(buffer) * sizeof(char));
-        strcpy(new->password, buffer);
-        memset(buffer, 0, strlen(buffer));
-        if (valid == 0) {
-            printf("Invalid password");
+        if (check_space(buffer) && !contains_special(buffer) && strcmp(buffer,"") != 0) {
+            new->password = malloc(strlen(buffer) * sizeof(char));
+            strcpy(new->password, buffer);
+
+            break;
         }
+        else
+            puts("Invalid Password");
+        memset(buffer, 0, strlen(buffer));
     }
 
     new->locals = create_locals_pointers();
@@ -417,6 +460,10 @@ void registration(struct User* head, struct local* local_head) {
     new->hot = malloc(strlen("None") * sizeof(char));
     strcpy(new->hot, "None");
 
+    while (head->next != NULL) {
+        /*Travel to the end of the list*/
+        head = head->next;
+    }
     new->pdis = create_pdi_pointers();
     new->next = NULL;
     head->next = new;
@@ -521,7 +568,7 @@ void change_locals(struct User *u, struct local* local_head) {
         if (option == 1) {
             getchar();
             while (!valid) {
-                printf("Choose Location or None or None: ");
+                printf("Choose Location or None: ");
                 fgets(buffer, BUFFER_SIZE, stdin);
                 buffer[strcspn(buffer, "\n")] = 0;
                 valid = valid_local(local_head, u->locals->next,buffer); /* Verifies if the password contains a whitespace */
