@@ -26,80 +26,85 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
     tail = head;
     fp = fopen(path, "r");
     /*Check if fp exists*/
-    if (fp == NULL)
+    if (fp == NULL){
         puts("Invalid File");
+        fp = fopen(path,"w");
+        fclose(fp);}
+    else {
+        while (fgets(buffer, 350, fp) != NULL) {
+            node = (struct User *) malloc(sizeof(struct User));
+            if (node != NULL) {
+                token = strtok(buffer, s);
+                node->username = malloc(strlen(token) * sizeof(char));
+                strcpy(node->username, token);
 
-    while(fgets(buffer, 350, fp) != NULL){
-        node = (struct User*) malloc (sizeof (struct User));
-        if (node != NULL) {
-            token = strtok(buffer, s);
-            node->username = malloc(strlen(token) * sizeof(char));
-            strcpy(node->username, token);
-
-            token = strtok(NULL, s);
-            node->password = malloc(strlen(token) * sizeof(char));
-            strcpy(node->password, token);
-
-            token = strtok(NULL, s);
-            node->name = malloc(strlen(token) * sizeof(char));
-            strcpy(node->name, token);
-
-            token = strtok(NULL, s);
-            node->address = malloc(strlen(token) * sizeof(char));
-            strcpy(node->address, token);
-
-            /*--------------------------*/
-            node->bdate = malloc(sizeof(struct date));
-            token = strtok(NULL, s);
-            node->bdate->day =(atoi(token));
-
-            token = strtok(NULL, s);
-            node->bdate->month =(atoi(token));
-
-            token = strtok(NULL, s);
-            node->bdate->year =(atoi(token));
-            /*----------------------------------------*/
-            token = strtok(NULL, s);
-            node->phone_nr = malloc(strlen(token) * sizeof(char));
-            strcpy(node->phone_nr, token);
-
-            node->locals = create_locals_pointers();
-            for(i = 0; i < 3; i++){
                 token = strtok(NULL, s);
-                parse_local(local_head,node->locals,token);
-            }
-            token = strtok(NULL, s);
-            node->hot = malloc(strlen(token) * sizeof(char));
-            strcpy(node->hot, token);
-            node->hot[strcspn(node->hot, "\n")] = 0;
+                node->password = malloc(strlen(token) * sizeof(char));
+                strcpy(node->password, token);
 
-            token = strtok(NULL, s);
-            node->pdis = create_pdi_pointers();
-            while(token){
-                token[strcspn(token, "\n")] = 0;
-                parse_pdi(pdi_head, node->pdis, token);
                 token = strtok(NULL, s);
+                node->name = malloc(strlen(token) * sizeof(char));
+                strcpy(node->name, token);
+
+                token = strtok(NULL, s);
+                node->address = malloc(strlen(token) * sizeof(char));
+                strcpy(node->address, token);
+
+                /*--------------------------*/
+                node->bdate = malloc(sizeof(struct date));
+                token = strtok(NULL, s);
+                node->bdate->day = (atoi(token));
+
+                token = strtok(NULL, s);
+                node->bdate->month = (atoi(token));
+
+                token = strtok(NULL, s);
+                node->bdate->year = (atoi(token));
+                /*----------------------------------------*/
+                token = strtok(NULL, s);
+                node->phone_nr = malloc(strlen(token) * sizeof(char));
+                strcpy(node->phone_nr, token);
+
+                node->locals = create_locals_pointers();
+                for (i = 0; i < 3; i++) {
+                    token = strtok(NULL, s);
+                    parse_local(local_head, node->locals, token);
+                }
+                token = strtok(NULL, s);
+                node->hot = malloc(strlen(token) * sizeof(char));
+                strcpy(node->hot, token);
+                node->hot[strcspn(node->hot, "\n")] = 0;
+
+                token = strtok(NULL, s);
+                node->pdis = create_pdi_pointers();
+                while (token) {
+                    token[strcspn(token, "\n")] = 0;
+                    parse_pdi(pdi_head, node->pdis, token);
+                    token = strtok(NULL, s);
+                }
+                /*----------------------*/
+                tail->next = node;
+                node->next = NULL;
+                tail = tail->next;
             }
-            /*----------------------*/
-            tail->next = node;
-            node->next = NULL;
-            tail = tail->next;
         }
+        fclose(fp);
     }
 }
 
 void print_single_user(struct User* user){
-    printf("1) Username: %s\n"
-           "2) Password: %s\n"
-           "3) Name: %s \n"
-           "4) Address: %s \n"
-           "5) Birth Date : %d-%d-%d \n"
-           "6) Phone Number: %s \n"
-           "7) Hot-PDI : %s\n"
-           "8) Favorite Places \n", user->username, user->password, user->name, user->address,user->bdate->day,user->bdate->month,user->bdate->year,user->phone_nr, user->hot);
+    printf("\t\t1) Username: %s\n"
+           "\t\t2) Password: %s\n"
+           "\t\t3) Name: %s \n"
+           "\t\t4) Address: %s \n"
+           "\t\t5) Birth Date : %d-%d-%d \n"
+           "\t\t6) Phone Number: %s \n"
+           "\t\t7) Hot-PDI : %s\n"
+           "\t\t8) Favorite Places \n", user->username, user->password, user->name, user->address,user->bdate->day,user->bdate->month,user->bdate->year,user->phone_nr, user->hot);
     print_local_pointers(user->locals);
-    printf("9) Favorite PDI's:\n");
+    printf("\t\t9) Favorite PDI's:\n");
     print_pdi_pointers(user->pdis);
+    puts("\t\t0) Exit");
     puts("");
 }
 
@@ -131,16 +136,17 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
     char option;int number;
     char buffer[BUFFER_SIZE];
     /* Prompts user to change his info */
+
     while(1){
         print_single_user(user);
-        puts("0) Exit");
+
         option = get_option();
         if (option == 0) {
             break;
         }
         if (option ==1){
             getchar();
-            puts(" You can't change you username");
+            puts("\t\tYou can't change you username");
         }
         if (option == 2) {
             getchar();
@@ -172,7 +178,7 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                     break;
                 }
                 else
-                    puts("Invalid Name");
+                    puts("\t\tInvalid Name");
                 memset(buffer, 0, strlen(buffer));
             }
         }
@@ -189,7 +195,7 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                 break;
             }
             else
-                puts("Invalid Address");
+                puts("\t\tInvalid Address");
             memset(buffer,0,strlen(buffer));
             }
         }
@@ -201,24 +207,24 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                 do {
                     number = get_option();
                     if (number < 1 || number > 31)
-                        puts("Invalid Number");
+                        puts("\t\tInvalid Number");
                 } while (number < 1 || number > 31);
                 user->bdate->day = number;
                 do {
                     number = get_option();
                     if (number < 1 || number > 12)
-                        puts("Invalid Number");
+                        puts("\t\tInvalid Number");
                 } while (number < 1 || number > 12);
                 user->bdate->month = number;
                 do {
                     number = get_option();
                     if (number < 1900 || number > 2010)
-                        puts("Invalid Number");
+                        puts("\t\tInvalid Number");
                 } while (number < 1900 || number > 2010);
                 user->bdate->year = number;
                 if (valid_date(user->bdate))
                     break;
-                puts("There is no such day as that");
+                puts("\t\tThere is no such day as that");
             }
         }
         if (option == 6){
@@ -234,11 +240,12 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
                 break;
             }
             else
-                puts("Invalid Phone Number");
+                puts("\t\tInvalid Phone Number");
             memset(buffer, 0, strlen(buffer));
             }
         }
         if(option == 7){
+            getchar();
             pdi_hot(user_head,user,pdi_head);
         }
 
@@ -319,30 +326,33 @@ void write_out(char* path, struct User* head){
     struct local_pointers* temp;
     struct pdi_pointers* pdis;
     fp = fopen(path, "w+");
-    head = head->next; /* Jumps header */
-    while (head != NULL){
-        temp = head->locals->next;
-        pdis = head->pdis->next;
-        fprintf(fp,"%s,%s,%s,%s,%d,%d,%d,%s", head->username,head->password,head->name, head->address, head->bdate->day,head->bdate->month,head->bdate->year, head->phone_nr);
-        for(i = 0; i < 3; i++) {
-            fprintf(fp,",");
-            if (temp->info == NULL)
-                fprintf(fp, "None");
-            else
-                fprintf(fp, temp->info->name);
-            temp = temp->next;
+    if (fp != NULL) {
+        head = head->next; /* Jumps header */
+        while (head != NULL) {
+            temp = head->locals->next;
+            pdis = head->pdis->next;
+            fprintf(fp, "%s,%s,%s,%s,%d,%d,%d,%s", head->username, head->password, head->name, head->address,
+                    head->bdate->day, head->bdate->month, head->bdate->year, head->phone_nr);
+            for (i = 0; i < 3; i++) {
+                fprintf(fp, ",");
+                if (temp->info == NULL)
+                    fprintf(fp, "None");
+                else
+                    fprintf(fp, temp->info->name);
+                temp = temp->next;
+            }
+            fprintf(fp, ",");
+            fprintf(fp, head->hot);
+            while (pdis) {
+                fprintf(fp, ",");
+                fprintf(fp, pdis->info->name);
+                pdis = pdis->next;
+            }
+            fprintf(fp, "\n");
+            head = head->next;
         }
-        fprintf(fp,",");
-        fprintf(fp,head->hot);
-        while(pdis){
-            fprintf(fp,",");
-            fprintf(fp,pdis->info->name);
-            pdis = pdis->next;
-        }
-        fprintf(fp,"\n");
-        head = head->next;
+        fclose(fp);
     }
-    fclose(fp);
 }
 
 void registration(struct User* head, struct local* local_head) {
@@ -362,7 +372,7 @@ void registration(struct User* head, struct local* local_head) {
             break;
         }
         else
-            puts("Username is invalid or already taken");
+            puts("\t\tUsername is invalid or already taken");
         memset(buffer,0,strlen(buffer));
     }
     while(1){
@@ -375,7 +385,7 @@ void registration(struct User* head, struct local* local_head) {
             break;
         }
         else
-            puts("Invalid Name");
+            puts("\t\tInvalid Name");
         memset(buffer, 0, strlen(buffer));
     }
 
@@ -389,7 +399,7 @@ void registration(struct User* head, struct local* local_head) {
         break;
         }
         else
-            puts("Invalid Address");
+            puts("\t\tInvalid Address");
         memset(buffer, 0, strlen(buffer));
     }
 
@@ -399,19 +409,19 @@ void registration(struct User* head, struct local* local_head) {
         do {
             number = get_option();
             if (number < 1 || number > 31)
-                puts("Invalid Number");
+                puts("\t\tInvalid Number");
         } while (number < 1 || number > 31);
         new->bdate->day = number;
         do {
             number = get_option();
             if (number < 1 || number > 12)
-                puts("Invalid Number");
+                puts("\t\tInvalid Number");
         } while (number < 1 || number > 12);
         new->bdate->month = number;
         do {
             number = get_option();
             if (number < 1900 || number > 2010)
-                puts("Invalid Number");
+                puts("\t\tInvalid Number");
         } while (number < 1900 || number > 2010);
         new->bdate->year = number;
         if (valid_date(new->bdate))
@@ -432,7 +442,7 @@ void registration(struct User* head, struct local* local_head) {
 
         }
         else
-            puts("Invalid Phone Number");
+            puts("\t\tInvalid Phone Number");
         memset(buffer, 0, strlen(buffer));
     }
 
@@ -448,7 +458,7 @@ void registration(struct User* head, struct local* local_head) {
             break;
         }
         else
-            puts("Invalid Password");
+            puts("\t\tInvalid Password");
         memset(buffer, 0, strlen(buffer));
     }
 
@@ -538,12 +548,10 @@ void update_pdi_popularity(struct User* u, struct PDI* pdi_head){
 
 void update_pdi_users_pointers(struct pdi_pointers* u, struct User* user) {
     /*Helps update pdi popularity (similar to lacal fucntions)*/
-    int i = 0;
     if (u->next != NULL) {
         u = u->next;
         while (u)
             if (u->info != NULL) {
-                //puts(u->info->name);
                 tail_insert_user_pointer(u->info->users_info, user);
                 u = u->next;
             }
@@ -574,7 +582,7 @@ void change_locals(struct User *u, struct local* local_head) {
                 valid = valid_local(local_head, u->locals->next,buffer); /* Verifies if the password contains a whitespace */
                 memset(buffer, 0, strlen(buffer));
                 if (valid == 0) {
-                    printf("Invalid Local\n");
+                    printf("\t\tInvalid Local\n");
                 }
             }
             break;
@@ -602,7 +610,7 @@ void change_locals(struct User *u, struct local* local_head) {
                 valid = valid_local(local_head, u->locals->next->next->next,buffer); /* Verifies if the password contains a whitespace */
                 memset(buffer, 0, strlen(buffer));
                 if (valid == 0) {
-                    printf("Invalid Local\n");
+                    printf("\t\tInvalid Local\n");
                 }
             }
             break;
@@ -662,7 +670,7 @@ void change_pdis(struct User *u, struct PDI* pdi_head){
     while (running) {
         print_only_pdis(pdi_head);
         puts("");
-        puts("Your Interest Points");
+        puts("\tYour Interest Points");
         print_pdi_pointers(u->pdis);
 
         puts("");
@@ -697,7 +705,7 @@ void change_pdis(struct User *u, struct PDI* pdi_head){
                 valid = search_and_destroy_pdi(pdi_head, u->pdis,buffer);
                 memset(buffer, 0, strlen(buffer));
                 if (valid == 0) {
-                    printf("Invalid Local\n");
+                    printf("Invalid PDI\n");
                 }
             }
         }
@@ -756,7 +764,6 @@ void remove_pdi(struct pdi_pointers* head, struct PDI* pdi){
 void pdi_hot(struct User* user_head, struct User* user, struct PDI* pdi_head) {
     /*Main menu to change Hot PDI*/
     char temp[BUFFER_SIZE];
-    int option;
     print_only_pdis(pdi_head);
             do {
                 printf("Choose your PDI: ");
@@ -783,13 +790,13 @@ void generate_trip(struct User * u, struct PDI* pdi_head, struct User* user_head
     /*Generates the desired trip for the user*/
     struct PDI** blockA, **blockB, **blockC;
     if(u->locals->next->info == NULL || u->locals->next->next->info == NULL || u->locals->next->next->next->info == NULL){
-        puts("You need to input 3 places before you can generate a trip");
+        puts("\t\tYou need to input 3 places before you can generate a trip");
     }
     else{
         blockA = generate_per_local(pdi_head,u,u->locals->next->info, pdi_pop_array,pdi_pop_array_size);
         blockB = generate_per_local(pdi_head,u,u->locals->next->next->info, pdi_pop_array,pdi_pop_array_size);
         blockC = generate_per_local(pdi_head,u,u->locals->next->next->next->info,pdi_pop_array,pdi_pop_array_size);
-        printf("Your trip is rated %.2lf%% according to our popularity tax calculator\n", popularity_tax_calculator(blockA, blockB, blockC, user_head, u, pdi_head));
+        printf("\t\tYour trip is rated %.2lf%% according to our popularity tax calculator\n", popularity_tax_calculator(blockA, blockB, blockC, user_head, u, pdi_head));
     }
 }
 
@@ -801,19 +808,19 @@ struct PDI ** generate_per_local(struct PDI* pdi_head,struct User *u,struct loca
     int counter = 0, i = 0;
     if(check_pdi_in_local(u->hot, local)){
         temp = pdi_exists(pdi_head,u->hot);
-        printf("\t-->%s \n", u->hot);
+        printf("\t\t\t-->%s \n", u->hot);
         array[counter++] = temp;
     }
             for (i = 0; counter < 3 && i < (pdi_pop_array_size); i++) {
                 if(strcmp(pdi_pop_array[i]->local, local->name) == 0 && pdi_in_user(u->pdis, pdi_pop_array[i]) && !check_array(array,counter,pdi_pop_array[i])){
-                        printf("\t-->%s \n", pdi_pop_array[i]->name);
+                        printf("\t\t\t-->%s \n", pdi_pop_array[i]->name);
                         array[counter++] = pdi_pop_array[i];
 
                 }
             }
         for (i = 0; counter < 3 && i < (pdi_pop_array_size ); i++) {
             if(strcmp(pdi_pop_array[i]->local, local->name) == 0 && !check_array(array,counter,pdi_pop_array[i])){
-                printf("\t-->%s \n", pdi_pop_array[i]->name);
+                printf("\t\t\t-->%s \n", pdi_pop_array[i]->name);
                 array[counter++] = pdi_pop_array[i];
             }
         }

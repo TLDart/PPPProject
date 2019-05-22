@@ -133,10 +133,10 @@ void print_local_pointers(struct local_pointers * locals){
     locals = locals->next;
     while(locals != NULL){
         if(locals->info != NULL){
-            printf("\t-> %s\n",locals->info->name);
+            printf("\t\t\t-> %s\n",locals->info->name);
         }
         else{
-            printf("\t-> None \n");
+            printf("\t\t\t-> None \n");
         }
         locals = locals->next;
     }

@@ -28,7 +28,8 @@ int main(){
         option = get_option();
         if (option == 1){
             login(MAX_TRIES, user_head,pdi_head,local_head);
-            break;}
+            continue;
+            }
         if (option == 2){
             registration(user_head, local_head);
             getchar();
@@ -65,7 +66,7 @@ char login(int max_tries, struct User* user_head, struct PDI* pdi_head, struct l
             break;
         }
         else{
-            puts("Invalid Username or Password");
+            puts("\t\tInvalid Username or Password");
         }
     }
 }
@@ -77,7 +78,7 @@ void user_interface_main(struct User* user, struct User* user_head, struct PDI* 
     int local_nr = count_local(local_head), pdi_nr = count_pdi_number(pdi_head), option, running = 1;
     local_array_popularity = create_popularity_order(local_head, local_nr);
     pdi_array_popularity = create_popularity_order_pdi(pdi_head, pdi_nr);
-    printf("\t\t Welcome, %s \n", user->username);
+    printf("\t\tWelcome, %s \n", user->username);
     puts("");
     while (running) {
         puts("\t\t 1) Edit Personal Info");
@@ -107,7 +108,7 @@ void user_interface_main(struct User* user, struct User* user_head, struct PDI* 
                 print_local_and_pdi_pop(local_array_popularity,pdi_array_popularity,local_nr, pdi_nr);
             }
             else
-                puts("Invalid Option");
+                puts("\t\tInvalid Option");
         }
         if(option == 3){
             update_pdi_and_local_popularity(local_array_popularity,pdi_array_popularity,local_nr, pdi_nr,local_head, pdi_head);

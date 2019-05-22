@@ -29,36 +29,35 @@ void load_pdi_data(struct PDI* head,char *path) {
     /*Check if fp exists*/
     if (fp == NULL)
         puts("Invalid File");
+    else {
+        while (fgets(buffer, 250, fp) != NULL) {
+            new = malloc(sizeof(struct PDI));
+            if (new != NULL) {
+                token = strtok(buffer, s);
+                new->name = malloc(strlen(token));
+                strcpy(new->name, token);
 
+                token = strtok(NULL, s);
+                new->local = malloc(strlen(token));
+                strcpy(new->local, token);
 
-    while(fgets(buffer, 250, fp) != NULL){
-        new = malloc(sizeof(struct PDI));
-        if (new != NULL) {
-            token = strtok(buffer, s);
-            new->name = malloc(strlen(token));
-            strcpy(new->name, token);
+                token = strtok(NULL, s);
+                new->description = malloc(strlen(token));
+                strcpy(new->description, token);
 
-            token = strtok(NULL, s);
-            new->local = malloc(strlen(token));
-            strcpy(new->local, token);
+                token = strtok(NULL, s);
+                new->schedule = malloc(strlen(token));
+                strcpy(new->schedule, token);
 
-            token = strtok(NULL, s);
-            new->description = malloc(strlen(token));
-            strcpy(new->description, token);
+                new->users_info = create_user_pointers();
 
-            token = strtok(NULL, s);
-            new->schedule = malloc(strlen(token));
-            strcpy(new->schedule, token);
-
-            new->users_info = create_user_pointers();
-
-            searching_pdi(head,new->name,&ant,&useless);
-            new->next = ant->next;
-            ant->next = new;
+                searching_pdi(head, new->name, &ant, &useless);
+                new->next = ant->next;
+                ant->next = new;
+            }
         }
-
+        fclose(fp);
     }
-    fclose(fp);
 
 }
 void searching_pdi(struct PDI* list, char* key, struct PDI** ant, struct PDI** actual){
@@ -84,11 +83,11 @@ void print_pdi_data(struct PDI* head){
 void print_single_pdi(struct PDI* u){
     /*Prints a single PDi*/
     {
-        printf("Name: %s\n"
-               "Local: %s\n"
-               "Description: %s \n"
-               "Schedule: %s \n"
-               "Popularity: %d", u->name, u->local, u->description, u->schedule, u->popularity);
+        printf("\t\tName: %s\n"
+               "\t\tLocal: %s\n"
+               "\t\tDescription: %s \n"
+               "\t\tSchedule: %s \n"
+               "\t\tPopularity: %d", u->name, u->local, u->description, u->schedule, u->popularity);
         puts("");
     }
 }
@@ -165,10 +164,10 @@ void print_pdi_pointers(struct pdi_pointers* pdis){
     pdis = pdis->next;
     while(pdis != NULL){
         if(pdis->info != NULL){
-            printf("\t-> %s\n",pdis->info->name);
+            printf("\t\t\t-> %s\n",pdis->info->name);
         }
         else{
-            printf("\t-> None \n");
+            printf("\t\t\t-> None \n");
         }
         pdis = pdis->next;
     }
