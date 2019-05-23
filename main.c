@@ -4,8 +4,8 @@
 #include "user.h"
 #define MAX_TRIES 3 /* Max number of tries for login*/
 #define MAX_SIZE 50 /*max size for username and password */
-#define PATH_USER "/home/tld/Documents/New project and this time It will work :)/DatasetC.txt"
-#define PATH_LOCALS  "/home/tld/Documents/New project and this time It will work :)/US.txt"
+#define PATH_USER "/home/tld/Documents/GITPULL/PPPProject/Db/DatasetA.txt"
+#define PATH_LOCALS  "/home/tld/Documents/GITPULL/PPPProject/Db/US.txt"
 
 void user_interface_main(struct User* user, struct User* head, struct PDI* pdi_head, struct local* local_head);
 int show_main_menu();
