@@ -113,7 +113,6 @@ int get_option(){
     /*Gets an option*/
     int option, result, counter = 0;
     do{
-        counter = 0;
         result = scanf("%d", &option);
         counter++;
         if(result != 1){getchar(); if (counter < 2) puts("Invalid Option");}
