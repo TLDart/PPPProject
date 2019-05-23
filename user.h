@@ -29,7 +29,7 @@ struct user_pointers{
 
 /*Linked List related Functions*/
 struct User* create_list(void);
-void load_user_data(struct User* head ,char *path, struct local* local_head, struct PDI* pdi_head);
+int load_user_data(struct User* head ,char *path, struct local* local_head, struct PDI* pdi_head);
 void print_single_user(struct User* user);
 int get_option();
 struct User* validate_login(struct User* head, char* username, char* password);

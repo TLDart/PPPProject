@@ -21,7 +21,7 @@ struct pdi_pointers{
 };
 
 struct PDI* create_list_pdi(void);
-void load_pdi_data(struct PDI* head,char *path);
+int load_pdi_data(struct PDI* head,char *path);
 void searching_pdi(struct PDI* list, char* key, struct PDI** ant, struct PDI** actual);
 void print_pdi_data(struct PDI* head);
 void print_single_pdi(struct PDI* u);
