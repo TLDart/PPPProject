@@ -23,7 +23,6 @@ struct local* load_local(struct PDI* pdi_head, struct local* local_head){
     struct local* ant, *useless;
     struct pdi_pointers* new;
     struct PDI* cpy_pdi = pdi_head->next; // Ignore header
-
     while(cpy_pdi != NULL){
         local = local_exists(local_head, cpy_pdi->local);
         /* If the local does not exist, we wanna create a new one*/

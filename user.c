@@ -16,7 +16,7 @@ struct User* create_list(void){
     return aux;
 }
 
-void load_user_data(struct User* head ,char *path, struct local* local_head, struct PDI* pdi_head) {
+int load_user_data(struct User* head ,char *path, struct local* local_head, struct PDI* pdi_head) {
     /*Pre-loads user data from a file to a linked list */
     char buffer[250]; const char s[2] = ","; char *token;
     FILE *fp;
@@ -28,9 +28,9 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
     /*Check if fp exists*/
     if (fp == NULL){
         puts("Invalid File");
-        fp = fopen(path,"w");
-        fclose(fp);}
-    else {
+        return 0;
+    }
+    else{
         while (fgets(buffer, 350, fp) != NULL) {
             node = (struct User *) malloc(sizeof(struct User));
             if (node != NULL) {
@@ -89,6 +89,7 @@ void load_user_data(struct User* head ,char *path, struct local* local_head, str
             }
         }
         fclose(fp);
+        return 1;
     }
 }
 
@@ -112,9 +113,10 @@ int get_option(){
     /*Gets an option*/
     int option, result, counter = 0;
     do{
+        counter = 0;
         result = scanf("%d", &option);
         counter++;
-        if(result != 1){ getchar(); if (counter < 2)puts("Invalid Option");}
+        if(result != 1){getchar(); if (counter < 2) puts("Invalid Option");}
     }
     while(result == 0);
     return option;
@@ -202,21 +204,23 @@ void edit_personal_info(struct User *user_head, struct User *user, struct local*
 
         if (option ==5) {
             getchar();
-            puts("Day/Month/Year:");
             while(1){
                 do {
+                    printf("Day:");
                     number = get_option();
                     if (number < 1 || number > 31)
                         puts("\t\tInvalid Number");
                 } while (number < 1 || number > 31);
                 user->bdate->day = number;
                 do {
+                    printf("Month:");
                     number = get_option();
                     if (number < 1 || number > 12)
                         puts("\t\tInvalid Number");
                 } while (number < 1 || number > 12);
                 user->bdate->month = number;
                 do {
+                    printf("Year");
                     number = get_option();
                     if (number < 1900 || number > 2010)
                         puts("\t\tInvalid Number");
@@ -407,18 +411,21 @@ void registration(struct User* head, struct local* local_head) {
     new->bdate = malloc(sizeof(struct date));
     while(1){
         do {
+            printf("Day: ");
             number = get_option();
             if (number < 1 || number > 31)
                 puts("\t\tInvalid Number");
         } while (number < 1 || number > 31);
         new->bdate->day = number;
         do {
+            printf("Month: ");
             number = get_option();
             if (number < 1 || number > 12)
                 puts("\t\tInvalid Number");
         } while (number < 1 || number > 12);
         new->bdate->month = number;
         do {
+            printf("Year:");
             number = get_option();
             if (number < 1900 || number > 2010)
                 puts("\t\tInvalid Number");
@@ -437,7 +444,6 @@ void registration(struct User* head, struct local* local_head) {
         if (valid_number(buffer) && !contains_special(buffer) && strcmp(buffer,"") != 0){
             new->phone_nr = malloc(strlen(buffer) * sizeof(char));
             strcpy(new->phone_nr, buffer);
-
             break;
 
         }

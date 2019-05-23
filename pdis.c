@@ -19,7 +19,7 @@ struct PDI* create_list_pdi(void){
 }
 
 
-void load_pdi_data(struct PDI* head,char *path) {
+int load_pdi_data(struct PDI* head,char *path) {
     /*Pre-loads pdi data from a file to a linked list */
     char buffer[250]; const char s[2] = "-"; char *token;
     struct PDI *new, *ant, *useless;
@@ -27,8 +27,10 @@ void load_pdi_data(struct PDI* head,char *path) {
     fp = fopen(path, "r");
 
     /*Check if fp exists*/
-    if (fp == NULL)
+    if (fp == NULL) {
         puts("Invalid File");
+        return 0;
+    }
     else {
         while (fgets(buffer, 250, fp) != NULL) {
             new = malloc(sizeof(struct PDI));
@@ -58,7 +60,7 @@ void load_pdi_data(struct PDI* head,char *path) {
         }
         fclose(fp);
     }
-
+    return 1;
 }
 void searching_pdi(struct PDI* list, char* key, struct PDI** ant, struct PDI** actual){
     /*Finds the correct position of the PDI (aka element before) in order correctly insert according to the key*/
