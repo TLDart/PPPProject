@@ -4,7 +4,7 @@
 #include "user.h"
 #define MAX_TRIES 3 /* Max number of tries for login*/
 #define MAX_SIZE 50 /*max size for username and password */
-#define PATH_USER "/home/tld/Documents/New project and this time It will work :)/DatasetA.txt"
+#define PATH_USER "/home/tld/Documents/New project and this time It will work :)/DatasetB.txt"
 #define PATH_LOCALS  "/home/tld/Documents/New project and this time It will work :)/US.txt"
 
 void user_interface_main(struct User* user, struct User* head, struct PDI* pdi_head, struct local* local_head);
@@ -16,15 +16,21 @@ int main(){
     struct User* user_head = create_list(); /*Preload data */
     struct PDI* pdi_head = create_list_pdi();
     struct local* local_head = create_list_local();
-    if(load_pdi_data(pdi_head, PATH_LOCALS) == 0 || load_user_data(user_head, PATH_USER, local_head, pdi_head) == 0) {
+    if(load_pdi_data(pdi_head, PATH_LOCALS) == 0) {
         puts("Invalid Load");
         return 0;
     }
     load_local(pdi_head, local_head);
+    if(load_user_data(user_head, PATH_USER, local_head, pdi_head) == 0){
+        puts("Invalid Load");
+        return 0;
+    }
+
     update_local_popularity(user_head,local_head);
     update_pdi_popularity(user_head,pdi_head);
     insert_popularity_pdi(pdi_head);
     insert_popularity_local(local_head);
+    print_user_data(user_head);
     while(running) {
         show_main_menu();
         option = get_option();
