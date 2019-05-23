@@ -529,7 +529,6 @@ void update_locals_users_pointers(struct local_pointers* u, struct User* user){
     u = u->next;
     for(i = 0; i < 3; i++){
         if(u->info != NULL) {
-            //puts(u->info->name);
             tail_insert_user_pointer(u->info->users_info, user);
         }
         u = u->next;
@@ -937,3 +936,5 @@ int total_popularity(struct PDI* pdi_head){
     }
     return count;
 }
+
+

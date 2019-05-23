@@ -67,3 +67,5 @@ int user_local_selected(struct User* user_head, struct local* localA, struct loc
 int total_popularity(struct PDI* pdi_head);
 int contains_special(char* string);
 int user_exists(struct User* head, char* string);
+
+

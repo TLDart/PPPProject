@@ -36,4 +36,5 @@ void bubble_sort_popularity_local(struct local** array,int n);
 void print_local_and_pdi_pop(struct local** local_array_popularity, struct PDI** local_pdi_popularity, int local_size, int size_pdi);
 void update_pdi_and_local_popularity(struct local **local_array_popularity,struct PDI** pdi_array_popularity,int local_nr, int pdi_nr, struct local* local_head, struct PDI* pdi_head);
 
+
 #endif // STRUCTLOCAISPDIS_H_INCLUDED

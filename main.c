@@ -25,12 +25,10 @@ int main(){
         puts("Invalid Load");
         return 0;
     }
-
     update_local_popularity(user_head,local_head);
     update_pdi_popularity(user_head,pdi_head);
     insert_popularity_pdi(pdi_head);
     insert_popularity_local(local_head);
-    print_user_data(user_head);
     while(running) {
         show_main_menu();
         option = get_option();

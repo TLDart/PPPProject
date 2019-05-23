@@ -230,3 +230,7 @@ void update_pdi_and_local_popularity(struct local **local_array_popularity,struc
     local_array_popularity = create_popularity_order(local_head, local_nr);
     pdi_array_popularity = create_popularity_order_pdi(pdi_head, pdi_nr);
 }
+
+
+
+
