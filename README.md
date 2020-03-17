@@ -31,5 +31,5 @@ To Build a dataset for this project a custom script was used, it can be found [h
 ## Known Bugs/Issues
 * Besides some C usual weirdness there is nothing to report
 
-## Colaborators
+## Collaborators
 [André Silva](https://github.com/DreSilva)
