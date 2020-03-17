@@ -1,6 +1,7 @@
 # PPP Project
 
-Small C based program, that uses linked lists, to plan field trips to different places and attraction points.
+Small C based program, that uses linked lists, to plan field trips to different places and attraction points.\
+This a Project For Year 1 Semester 2 of Computer Science.
 
 ## Flow
 1. When the program starts, and load data successfully the users is prompted for a login, which is, a simple matching password in the database
