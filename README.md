@@ -30,3 +30,6 @@ Small C based program, that uses linked lists, to plan field trips to different 
 To Build a dataset for this project a custom script was used, it can be found [here](https://github.com/TLDart/DataGenerator).
 ## Known Bugs/Issues
 * Besides some C usual weirdness there is nothing to report
+
+## Colaborators
+[AnDré Silva](https://github.com/DreSilva)
