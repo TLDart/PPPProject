@@ -32,4 +32,4 @@ To Build a dataset for this project a custom script was used, it can be found [h
 * Besides some C usual weirdness there is nothing to report
 
 ## Colaborators
-[AnDré Silva](https://github.com/DreSilva)
+[André Silva](https://github.com/DreSilva)
